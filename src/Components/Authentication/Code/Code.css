@@ -1,0 +1,35 @@
+.code-input {
+    display: grid;
+    padding-left: 5px;
+    grid-auto-flow: column;
+    align-items: center;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 3px 0 rgba(0, 0, 0, 0.19);
+    padding-right: 5px;
+}
+
+.code-input>i {
+    font-style: normal;
+    justify-self: end;
+}
+
+.code-input>input {
+    font-family: 'Lucida Bright';
+}
+
+.component-form .code-input:hover {
+    border: 1px solid skyblue;
+}
+
+.component-form span>input:focus {
+    outline: none;
+}
+
+.component-form .resend-code {
+    font-style: normal;
+    font-size: 0.7rem;
+    margin-top: 5px;
+    color: #0D9D0A;
+    font-weight: bolder;
+    cursor: context-menu;
+    justify-self: end;
+}

@@ -1,24 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import Code from './Components/Authentication/Code/Code.jsx';
+import Password from './Components/Authentication/Password/Password';
+import Signin from './Components/Authentication/Signin/Signin';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Code login='657140183' />
     </div>
   );
 }

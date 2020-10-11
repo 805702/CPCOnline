@@ -1,0 +1,32 @@
+.block-name {
+    display: grid;
+    justify-items: center;
+    min-width: 276px;
+}
+
+.page-name {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Lucida Bright";
+    margin-top: 5px;
+}
+
+.block-message {
+    font-weight: lighter;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.guidan {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.guidan>i {
+    justify-self: end;
+}
+
+.guidan>label {
+    justify-self: start;
+}

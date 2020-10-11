@@ -1,0 +1,33 @@
+.component-form span:first-of-type {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: baseline;
+}
+
+.component-form>input:first-of-type {
+    height: 40px;
+}
+
+.component-form>input {
+    border: none;
+    border-radius: 3px;
+    height: 2em;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 3px 0 rgba(0, 0, 0, 0.19);
+    font-size: 1.1rem;
+    padding-left: 5px;
+}
+
+.component-form>input:hover {
+    border: 1px solid skyblue;
+}
+
+.component-form>input:focus {
+    outline: none;
+    border: 1px solid skyblue;
+}
+
+.component-form>.ex-message {
+    font-size: 0.7em;
+    color: rgba(0, 0, 0, 0.5);
+    justify-self: start;
+}
