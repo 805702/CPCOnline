@@ -1,0 +1,32 @@
+/* ----------------------- examSelection ----------------- */
+
+.entry-method-container .entry-method-tab {
+    background-color: green;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+    width: fit-content;
+    margin-left: .5rem;
+    padding: 5px;
+    padding-bottom: 2px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.entry-method-container .entry-method-tab i {
+    padding: 0.25rem;
+    background-color: white;
+    border-radius: 100%;
+}
+
+.entry-method-container .entry-method-tab i:first-of-type {
+    margin-right: 0.25rem;
+}
+
+.entry-method-container .entry-method-tab i:last-of-type {
+    margin-left: 0.25rem;
+}
+
+.entry-method-container .entry-method-tab .active-entry-method {
+    background-color: #FFF500;
+}

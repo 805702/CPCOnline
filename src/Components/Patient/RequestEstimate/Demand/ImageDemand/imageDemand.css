@@ -1,0 +1,34 @@
+.demand-holder .camera-holder,
+.demand-holder .to-be-upldd-imgs .dmd-img {
+    position: relative;
+}
+
+.demand-holder .camera-holder .close-camera,
+.demand-holder .to-be-upldd-imgs .dmd-img .remove-img {
+    position: absolute;
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.397);
+    top: 0;
+    right: 0;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.demand-holder .to-be-upldd-imgs .dmd-img {
+    /* width: fit-content; */
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.demand-holder .to-be-upldd-imgs .dmd-img>img {
+    height: 200px;
+    width: inherit;
+    border-radius: 10px;
+}
+
+.demand-holder .to-be-upldd-imgs {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-rows: repeat(auto-fit, 100px);
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}

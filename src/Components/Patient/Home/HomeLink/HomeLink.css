@@ -1,0 +1,42 @@
+.home-link-span {
+    display: grid;
+    align-content: center;
+    border-radius: 7px;
+    position: relative;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.home-link .home-link-span {
+    background-color: white;
+    border-radius: 7px;
+    text-align: center;
+    color: #0D9D0A;
+    font-weight: bold;
+    height: 100%;
+}
+
+.home-link {
+    text-decoration: none;
+}
+
+.home-link:hover,
+.home-link:focus,
+.home-link-span:focus {
+    outline: none;
+}
+
+.home-link-span:hover {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 10px 0 rgba(38, 150, 224, 0.19);
+    border: 1px solid rgba(38, 150, 224, 0.19);
+    transition: 0.5s;
+}
+
+.home-link-span .home-notif {
+    background-color: #ee3333;
+    color: white;
+    position: absolute;
+    padding: 0.2rem 0.4rem;
+    right: 0;
+    top: 0;
+    border-radius: 100%;
+}

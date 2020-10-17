@@ -1,0 +1,79 @@
+.component-form .date-input {
+    height: 2.5rem;
+}
+
+.guidan,
+.component-form #cancel-last-span {
+    margin-top: 5px;
+}
+
+.component-form #cancel-last-span {
+    margin-top: 0;
+}
+
+.gender-radio {
+    display: grid;
+    grid-auto-flow: column;
+    margin-top: 5px;
+}
+
+.gender-radio .radio-group:first-of-type {
+    display: grid;
+    grid-template-columns: 40px 20px;
+    align-items: center;
+}
+
+.gender-radio .radio-group:last-of-type {
+    display: grid;
+    grid-template-columns: 60px 20px;
+    align-items: center;
+}
+
+.idnt-btns,
+.txt-entry-mthd-btns {
+    margin-top: 20px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 5px;
+}
+
+.idnt-btns .btn-cancel,
+.txt-entry-mthd-btns .btn-cancel {
+    justify-self: start;
+    background-color: white;
+    border: 1px solid #EE3333;
+    color: #EE3333;
+}
+
+.idnt-btns button,
+.txt-entry-mthd-btns button {
+    background: white;
+    font-weight: 400;
+    font-size: large;
+    padding: 5px;
+    border: none;
+    padding: 3px 10px;
+    border-radius: 5px;
+    color: #0d9d0a;
+    border: 1px solid #0D9D0A;
+    justify-self: end;
+    width: 7rem;
+}
+
+.idnt-btns .btn-cancel:hover,
+.txt-entry-mthd-btns .btn-cancel:hover {
+    background: #EE3333;
+    color: white;
+}
+
+.idnt-btns button:hover,
+.txt-entry-mthd-btns button:hover {
+    transition: 0.4s;
+    background-color: #0d9d0a;
+    color: white;
+}
+
+.idnt-btns button:focus,
+.txt-entry-mthd-btns button:focus {
+    outline: none;
+}

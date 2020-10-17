@@ -23,7 +23,15 @@ export class CodeForm extends Component {
             })}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                alert("submitted form");
+                  /*
+                      write your request to the server submitting phone
+                      and password
+                  */
+                  let phone = this.props.location.pathname.split('_')
+                  phone = phone[phone.length-1]
+                  console.log(phone, values.password)
+
+                  this.props.history.push('/home')
                 setSubmitting(false);
               }, 400);
             }}
