@@ -10,7 +10,8 @@ import EUMO from '../../../assets/EUMO.png';
 import './Validation.css'
 import 'react-toastify/dist/ReactToastify.css';
 
-function notifyNoExam(){return toast.error('Phone number does not match paying service. verify and try again')}
+function notifyIncompatiblePhoneService(){return toast.error('Phone number does not match paying service. verify and try again')}
+function notifyNoExam(){return toast.error('Must select at least an exam')}
 
 
 
@@ -88,6 +89,7 @@ function Validation(props){
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
               if(validatePayingService(values.payingPhone, values.payingService)){
+                if(values.choosenExam.length!==0){
                 let returnValues = {
                   choosenExam:values.choosenExam,
                   payingPhone:Number(values.payingPhone),
@@ -100,6 +102,7 @@ function Validation(props){
                 console.log(returnValues);
                 //this is where you do a backend call
               }else notifyNoExam()
+              }else notifyIncompatiblePhoneService()
               setSubmitting(false);
             },100);
           }}
@@ -238,7 +241,7 @@ function Validation(props){
               </div>
               <div className="idnt-btns">
                 <button type='button' className="btn-cancel" onClick={()=>window.location.assign('/home')}>Cancel</button>
-                <button type='button' classname='btn-cancel' onClick={()=>props.onNext('back')} >
+                <button type='button' className='btn-cancel' onClick={()=>props.onNext('back')} >
                   <i className='fa fa-arrow-left'>Back</i></button>
                 <button type='submit' className="btn-pay">Pay</button>
               </div>

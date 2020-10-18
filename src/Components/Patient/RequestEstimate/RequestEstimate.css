@@ -1,7 +1,7 @@
 /* ----------------------- examSelection ----------------- */
 
 .entry-method-container .entry-method-tab {
-    background-color: green;
+    background-color: #0d9d0a;
     display: grid;
     grid-auto-flow: column;
     justify-content: start;

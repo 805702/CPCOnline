@@ -106,7 +106,16 @@ class RequestEstimate extends Component {
                     />
                     :null
                 }
-                {this.state.step==='med'?<MedPersonnel onNext={this.handleNextBtn} medPersonnel={this.state.medPersonnel} />:null }
+                {this.state.step==='med'?
+                    <MedPersonnel
+                        onNext={this.handleNextBtn}
+                        identification={this.state.identification}
+                        images={this.state.images}
+                        entryMethod={this.state.entryMethod}
+                        medPersonnel={this.state.medPersonnel}
+                    />
+                    :null
+                }
             </ComponentMould>
         )
     }

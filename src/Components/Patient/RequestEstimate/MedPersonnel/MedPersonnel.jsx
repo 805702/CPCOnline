@@ -1,8 +1,27 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './MedPersonnel.css'
+
+
+
+function notifyNoExam(){return toast.error('No images for your demand')}
+
+function submitDemand(images, identification, entryMethod, values){
+    if(images.length>0){
+        let returnList={
+            images:images,
+            identification:identification,
+            entryMethod: entryMethod,
+            medPersonnel:values
+        }
+        console.log(returnList)
+        //write code to upload user data here.
+    }else notifyNoExam()
+}
 
 function MedPersonnel(props) {
     return (
@@ -51,8 +70,14 @@ function MedPersonnel(props) {
             <div className="idnt-btns">
                 <button type='button' className='btn-cancel' onClick={()=>props.onNext('back',values)} >
                   <i className='fa fa-arrow-left'>Back</i></button>
-                <button type='submit' className='btn-nxt' >Next</button>
+                {props.entryMethod==='text'?<button type='submit' className='btn-nxt'>Next</button>
+                :<button
+                    type='button'
+                    className='btn-nxt'
+                    onClick={()=>submitDemand(props.images, props.identification, props.entryMethod, values)}
+                    >Submit demand</button>}
             </div>
+                <ToastContainer />
           </Form>
         )}
       </Formik>

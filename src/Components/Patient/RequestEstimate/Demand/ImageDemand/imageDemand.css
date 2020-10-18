@@ -7,28 +7,132 @@
 .demand-holder .to-be-upldd-imgs .dmd-img .remove-img {
     position: absolute;
     padding: 5px;
-    background-color: rgba(128, 128, 128, 0.397);
+    background-color: rgba(128, 128, 128, 0.222);
     top: 0;
     right: 0;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
-.demand-holder .to-be-upldd-imgs .dmd-img {
-    /* width: fit-content; */
-    border: 1px solid black;
-    border-radius: 10px;
-}
-
-.demand-holder .to-be-upldd-imgs .dmd-img>img {
-    height: 200px;
-    width: inherit;
-    border-radius: 10px;
+.demand-holder .to-be-upldd-imgs .dmd-img .remove-img:hover,
+.demand-holder .an-open-img .img-btns i:first-of-type:hover {
+    transition: 0.2s;
+    background-color: #ee3333;
+    color: white;
 }
 
 .demand-holder .to-be-upldd-imgs {
     display: grid;
     grid-gap: 10px;
-    grid-template-rows: repeat(auto-fit, 100px);
+    justify-items: center;
+    grid-auto-rows: 150px;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    padding: 10px;
+}
+
+.demand-holder .an-open-img {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.demand-holder .an-open-img .img-btns {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-auto-flow: column;
+    width: 100%;
+}
+
+.demand-holder .an-open-img .img-btns i:last-of-type,
+.demand-holder .an-open-img .img-btns i:first-of-type {
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.222);
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.demand-holder .an-open-img .img-btns i:first-of-type {
+    justify-self: start;
+    border-radius: 0;
+    border-bottom-right-radius: 10px;
+}
+
+.demand-holder .an-open-img .img-btns i:last-of-type:hover {
+    transition: 0.2s;
+    background-color: rgba(128, 128, 128, 0.562);
+}
+
+.demand-holder .an-open-img .img-btns i:last-of-type {
+    justify-self: end;
+    border-top-right-radius: 0;
+}
+
+.demand-holder .to-be-upldd-imgs .dmd-img {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.demand-holder .an-open-img>img,
+.demand-holder .to-be-upldd-imgs .dmd-img>img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.demand-holder .img-dmd-btns {
+    display: grid;
+    grid-auto-flow: column;
+    border-bottom: 1px solid black;
+    padding: 7px;
+    /* margin-bottom: 10px; */
+}
+
+.demand-holder .img-dmd-btns .import-image-btn {
+    justify-self: start;
+    background-color: #0D9d0A;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid #0D9d0A;
+}
+
+.demand-holder .img-dmd-btns .import-image-btn:hover {
+    transition: 0.5s;
+    background-color: green;
+}
+
+.demand-holder .img-dmd-btns .open-camera {
+    justify-self: end;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.demand-holder .img-dmd-btns .open-camera button {
+    height: 100%;
+    border-radius: 5px;
+    border: none;
+    border: 1px solid black;
+    font-size: 1.05rem;
+    background-color: white;
+}
+
+.demand-holder .img-dmd-btns .open-camera button:hover {
+    transition: 0.5s;
+    background-color: black;
+    color: white;
+}
+
+.demand-holder .img-dmd-btns .open-camera button>i {
+    margin-left: 5px;
+    font-size: 1.1rem;
+}
+
+@media(min-width:768px) {
+    .demand-holder .img-dmd-btns .open-camera {
+        visibility: hidden;
+    }
 }
