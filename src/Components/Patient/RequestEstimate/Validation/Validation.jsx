@@ -4,11 +4,11 @@ import { Formik, Form, Field } from "formik";
 import { Scrollbars } from "react-custom-scrollbars";
 import { ToastContainer, toast } from 'react-toastify';
 
-import OM from '../../../assets/OM.svg';
-import MOMO from '../../../assets/MOMO.svg';
-import EUMO from '../../../assets/EUMO.png';
+import OM from '../../../../assets/OM.svg';
+import MOMO from '../../../../assets/MOMO.svg';
+import EUMO from '../../../../assets/EUMO.png';
 import './Validation.css'
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify'
 
 function notifyIncompatiblePhoneService(){return toast.error('Phone number does not match paying service. verify and try again')}
 function notifyNoExam(){return toast.error('Must select at least an exam')}
@@ -100,13 +100,7 @@ function Validation(props){
                 }
 
                 console.log(returnValues);
-                //this is where you do a backend 
-                
-                //after the api call if the response is good, then you write to the state using the onNext supplied by props
-                //the response from the backend will contain the SIN and and status
-                //the status is true or false. indicating the state of the demand
-                let data={SIN:'SYS - 085 - 965', status:'true'}
-                props.onNext('next',data)
+                //this is where you do a backend call
               }else notifyNoExam()
               }else notifyIncompatiblePhoneService()
               setSubmitting(false);

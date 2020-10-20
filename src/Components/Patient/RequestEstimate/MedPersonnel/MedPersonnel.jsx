@@ -19,7 +19,7 @@ function submitDemand(images, identification, entryMethod, values){
             medPersonnel:values
         }
         console.log(returnList)
-        //write code to upload user data here.
+        //make your api call here for the images
     }else notifyNoExam()
 }
 
@@ -74,7 +74,20 @@ function MedPersonnel(props) {
                 :<button
                     type='button'
                     className='btn-nxt'
-                    onClick={()=>submitDemand(props.images, props.identification, props.entryMethod, values)}
+                    onClick={()=>{
+                      if(props.images.length>0){
+                          let returnList={
+                              images: props.images,
+                              identification: props.identification,
+                              entryMethod: props.entryMethod,
+                              medPersonnel:values
+                          }
+                          console.log(returnList)
+                          //make your api call here for the images
+                          props.onNext('next', false, true)
+                      }else notifyNoExam()
+                    }
+                    }
                     >Submit demand</button>}
             </div>
                 <ToastContainer />

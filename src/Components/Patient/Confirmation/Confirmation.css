@@ -1,0 +1,107 @@
+.cnfrm-scs {
+    border: 1px solid #0d9d0a;
+}
+
+.cnfrm-fail {
+    border: 1px solid #ee3333;
+}
+
+.cnfrm-hldr {
+    border-radius: 10px;
+    display: grid;
+    margin-top: 10px;
+    justify-items: center;
+    padding-bottom: 10px;
+}
+
+.cnfrm-hldr .fa,
+.confirmation-failed {
+    justify-self: center;
+    padding: 7px;
+    margin: 10px 0;
+    border-radius: 100%;
+    background-color: #ee3333;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.cnfrm-hldr .confirmation-success {
+    background-color: #0d9d0a;
+}
+
+.cnfrm-hldr .confirmation-header {
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 10px;
+}
+
+.cnfrm-hldr .confirmation-message {
+    font-style: normal;
+    width: 30vw;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+}
+
+.cnfrm-hldr .confirmation-message a {
+    color: rgb(95, 129, 223);
+}
+
+.cnfrm-hldr .confirmation-message .try-dmd-agn {
+    background-color: #ee3333;
+    width: fit-content;
+    padding: 5px;
+    color: white;
+    font-style: normal;
+    border-radius: 7px;
+    margin: 3px 0;
+    cursor: pointer;
+}
+
+.cnfrm-hldr .thanks {
+    margin-top: 10px;
+    font-style: normal;
+}
+
+.cnfrm-hldr .demand-code {
+    background-color: #0d9d0a;
+    margin: 10px 0;
+    padding: 7px;
+    color: white;
+    letter-spacing: 2px;
+    border-radius: 5px;
+}
+
+.cnfrm-hldr i {
+    font-style: normal;
+}
+
+.cnfrm-hldr .confirmation-code {
+    margin-left: 5px;
+}
+
+.cnfrm-hldr .home-btn {
+    font-style: normal;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.cnfrm-hldr .home-btn a {
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #0d9d0a;
+}
+
+.cnfrm-hldr .home-btn a:hover {
+    color: white;
+    background-color: #0d9d0a;
+}
+
+
+/* .cnfrm-hldr .home-btn:hover {
+    transition: 0.3s;
+    background-color: #0d9d0a;
+} */

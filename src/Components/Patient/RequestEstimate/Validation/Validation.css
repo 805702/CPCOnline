@@ -1,0 +1,134 @@
+.patient-info {
+    display: grid;
+    padding: 5px 3px;
+    background-color: #f6f3f3;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.patient-info i {
+    font-style: normal;
+    width: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#cancel-guidan-css {
+    margin-top: 0;
+}
+
+.pyg-svc-radio {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.pyg-svc-radio .radio-group {
+    display: grid;
+    grid-template-columns: 20px 50px;
+    align-items: center;
+}
+
+.exm-dmd-tbl-hdr,
+.exm-dmd-tbl-total,
+.exm-dmd-tbl-row {
+    display: grid;
+    grid-template-columns: 20px 1fr 75px;
+}
+
+.exm-dmd-tbl-hdr {
+    background-color: #f6f3f3;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+}
+
+.exm-dmd-tbl-hdr i:nth-of-type(1),
+.exm-dmd-tbl-hdr i:nth-of-type(2),
+.exm-dmd-tbl-row i:nth-of-type(1),
+.exm-dmd-tbl-row i:nth-of-type(2) {
+    border-left: 1px solid black;
+}
+
+.exm-dmd-tbl-row i:nth-of-type(2) {
+    padding-right: 10px;
+    text-align: end;
+}
+
+
+/* cpc@2020 */
+
+.exm-dmd-tbl-row {
+    border-bottom: 1px solid black;
+}
+
+.exm-dmd-tbl-row:first-of-type {
+    margin-top: 22px;
+}
+
+.exm-dmd-tbl-row:last-of-type {
+    margin-bottom: 20px;
+}
+
+.exm-dmd-tbl-row i:last-of-type {
+    padding-left: 5px;
+}
+
+.exm-dmd-tbl-row i:first-of-type {
+    padding-left: 5px;
+}
+
+.exm-dmd-tbl-row i {
+    font-size: 1.1rem;
+}
+
+.exm-dmd-tbl-hdr i,
+.exm-dmd-tbl-row i,
+.exm-dmd-tbl-total i {
+    font-style: normal;
+    align-self: center;
+}
+
+.exm-dmd-tbl-total i:last-of-type {
+    border-left: 1px solid black;
+    text-align: end;
+    padding-right: 10px;
+}
+
+.demanded-exam-info {
+    height: 50vh;
+    position: relative;
+    top: 0;
+    right: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#demanded-exam-info-validate {
+    max-height: 30vh;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.exm-dmd-tbl-total {
+    grid-template-columns: 1fr 75px;
+    font-weight: 400;
+    border-top: 1px solid black;
+    right: 0;
+    min-width: 228px;
+}
+
+.idnt-btns .btn-cancel {
+    border: none;
+}
+
+.idnt-btns .btn-pay:hover {
+    background-color: green;
+}
+
+@media only screen and (min-width: 800px) {
+    .exm-dmd-tbl-total {
+        width: 30vw;
+    }
+}

@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select';
 
 import './TextDemand.css';
-import '../demand.css';
 
 
 class TextDemand extends Component {
