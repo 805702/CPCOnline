@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Block from '../../../Global/Block/Block'
-import ComponentMould from '../../../Global/ComponentMould/ComponentMould'
 
 import './Confirmation.css'
 

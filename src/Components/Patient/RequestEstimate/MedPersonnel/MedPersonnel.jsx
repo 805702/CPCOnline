@@ -10,19 +10,6 @@ import './MedPersonnel.css'
 
 function notifyNoExam(){return toast.error('No images for your demand')}
 
-function submitDemand(images, identification, entryMethod, values){
-    if(images.length>0){
-        let returnList={
-            images:images,
-            identification:identification,
-            entryMethod: entryMethod,
-            medPersonnel:values
-        }
-        console.log(returnList)
-        //make your api call here for the images
-    }else notifyNoExam()
-}
-
 function MedPersonnel(props) {
     return (
       <Formik

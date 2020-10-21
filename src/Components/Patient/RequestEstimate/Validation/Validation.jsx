@@ -41,7 +41,8 @@ function calcultateTotal(selectedExams, choosenExam){
     return null
   })
   calculationList.map(exam=>{
-    total += exam.bValue*105
+    total += exam.bValue*105;
+    return null
   })
 
   return total

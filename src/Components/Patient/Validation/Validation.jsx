@@ -42,6 +42,7 @@ function calcultateTotal(selectedExams, choosenExam){
   })
   calculationList.map(exam=>{
     total += exam.bValue*105
+    return null
   })
 
   return total
@@ -96,7 +97,8 @@ function Validation(props){
                   payingService:values.payingService,
                   identification:props.identification,
                   medPersonnel:props.medPersonnel,
-                  entryMethod:props.entryMethod
+                  entryMethod:props.entryMethod,
+                  demandAmount: calcultateTotal(props.selectedExams, values.choosenExam)
                 }
 
                 console.log(returnValues);

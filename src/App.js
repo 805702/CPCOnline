@@ -6,7 +6,6 @@ import Code from './Components/Authentication/Code/Code.jsx';
 // import Login from './Components/Authentication/Login/Login';
 import Password from './Components/Authentication/Password/Password';
 import Signin from './Components/Authentication/Signin/Signin';
-import Confirmation from './Components/Patient/Confirmation/Confirmation';
 import Home from './Components/Patient/Home/Home';
 import RequestEstimate from './Components/Patient/RequestEstimate/RequestEstimate';
 
