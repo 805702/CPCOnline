@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import * as Yup from 'yup';import { ToastContainer, toast } from 'react-toastify';
 import { withRouter } from 'react-router-dom';
+import parseJwt from '../../../utils/parseJwt';
+import BarLoader from 'react-bar-loader';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class PasswordForm extends Component {
@@ -9,6 +12,8 @@ class PasswordForm extends Component {
         invalidPassword:false,
         readable:false
     }
+  notifyErrorMessage=(message)=>toast.error(message)
+  notifyCodeSent=()=>toast.success('A new code has been sent')
 
     handleEye=()=>{
         this.setState({readable:!this.state.readable},()=>{
@@ -27,22 +32,61 @@ class PasswordForm extends Component {
                   password: Yup.string().required("required"),
                 })}
                 onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        /*
-                            write your request to the server submitting phone
-                            and password
-                        */
-                       let phone = this.props.location.pathname.split('_')
-                       phone = phone[phone.length-1]
-                       console.log(phone, values.password)
+                  /*
+                      write your request to the server submitting phone
+                      and password
+                  */
+                  let phone = this.props.location.pathname.split('_')
+                  phone = phone[phone.length-1]
 
-                       this.props.history.push('/home')
+                  fetch('http://localhost:4000/api/auth/login', {
+                    method:'post',
+                    headers: {'Content-Type': 'application/json'},
+                    body:JSON.stringify({
+                      phone:phone,
+                      pwd:values.password,
+                      method:'password'
+                    })
+                  })
+                  .then(data=>data.json())
+                  .then(result=>{
+                    if(result.err==='Invalid Password') {
+                      this.setState({invalidPassword:true},()=>{
+                        this.notifyErrorMessage("Invalid Password")
+                      })
+                    }
+                    else{
+                      console.log(result)
+                      localStorage.setItem("userToken",result.token)
+                      //redirect to the right home page
+                      if(result.role==='admin') {
+                        console.log(parseJwt(result.token))
+                        this.props.history.push('/adminHome')
+                      }else if(result.role==='operator'){
+                        this.props.history.push('/operatorHome')
+                      }else if(result.role==='commFi'){
+                        this.props.history.push('/commFiHome')
+                      }else if(result.role==='partner'){
+                        this.props.history.push('/partnerHome')
+                      }
+                      else {
+                        this.props.history.push('/')
+                      }
+                    }
                     setSubmitting(false);
-                  }, 400);
+                  })
+                  .catch(err=>{  
+                    if(err.toString()==="TypeError: Failed to fetch"){
+                      this.notifyErrorMessage("Verify that your internet connection is active")
+                    }else this.notifyErrorMessage(err.toString())
+                    setSubmitting(false);
+                  })
+
                 }}
               >
-                {({ errors, touched }) => (
+                {({ errors, touched, isSubmitting}) => (
                   <Form className="component-form">
+                    {isSubmitting?<BarLoader color="#0D9D0A" height="5" />:null}
                     <span className="guidan">
                       <label htmlFor="password">Password</label>
                       {touched.password && errors.password ? (
@@ -75,8 +119,9 @@ class PasswordForm extends Component {
                     ) : null}
                     <span className="action-btns">
                       <i className="fa fa-arrow-left">Back</i>
-                      <button type="submit">Next</button>
+                      <button type="submit" disabled={isSubmitting} >Next</button>
                     </span>
+                    <ToastContainer />
                   </Form>
                 )}
             </Formik>

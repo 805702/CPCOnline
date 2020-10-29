@@ -34,6 +34,20 @@ class RequestEstimate extends Component {
      * med: enter med personnel data
      * validate: validate and confirm request (only for text entryMethod)
      */
+    componentDidMount(){
+        fetch("http://localhost:4000/api/exams/getExams",{
+            method:"get",
+            headers: {'Content-Type': 'application/json'},
+        })
+        .then(data=>data.json())
+        .then(result=>{
+            console.log(result.exams)
+            //push the exams to state.
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
 
     blockMessage=()=>{
         switch(this.state.step){

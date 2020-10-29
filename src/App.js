@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-
 import './App.css';
 import Code from './Components/Authentication/Code/Code.jsx';
 // import Login from './Components/Authentication/Login/Login';
@@ -8,6 +7,7 @@ import Password from './Components/Authentication/Password/Password';
 import Signin from './Components/Authentication/Signin/Signin';
 import Home from './Components/Patient/Home/Home';
 import RequestEstimate from './Components/Patient/RequestEstimate/RequestEstimate';
+import Results from './Components/Patient/Results/Results';
 
 class App extends Component {
   render(){
@@ -31,8 +31,9 @@ class App extends Component {
                 }else return <Redirect to='/' />
               }
             } />
-            <Route exact path='/home' render={
-              ()=>{
+            <Route exact path='/patientHome' component={Home} />
+            <Route exact path='/adminHome' component={Home} />
+              {/* ()=>{
                 //get user role from the token  and redirect to the right page.
                 //do an if to verify if the localStorage has the user.
                 //the switch
@@ -42,7 +43,8 @@ class App extends Component {
                     return <Home />
                 }
               }
-            } />
+            } /> */}
+            <Route exact path='/result' component={Results} />
             <Redirect to='/' />
         </Switch>
       </Router>

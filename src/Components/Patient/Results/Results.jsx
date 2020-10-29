@@ -1,49 +1,69 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { date } from 'yup';
 
 import Block from '../../../Global/Block/Block'
 import ComponentMould from '../../../Global/ComponentMould/ComponentMould'
+import './Results.css'
+import StyleReceipt from './StyleReceipt/StyleReceipt';
+import StyleDemands from './StyleDemands/StyleDemands'
 
-function getUserId(){
-    //here we are supposed to get the connected user's Id
-    userId=1
-    return userId
+//when this page is loaded, all the results pertaining to the patient is loaded automatically from the backend
+//the backend will provide two crucial information
+//1. the first information table is the medicalExamDemand_has_Examination that will have an inner join with the  examination table and another inner join with MedicalExamDemand.
+// the structure of 1 will be the following columns: 
+// idMedicalExamDemandExamination idMedicalExamDemand nameExamination daysToResult GIN medicalExamDemand.dateCreated,
+//
+//2. the second information table is the MedicalExamResult table of all the medicalExamDemand_has_Examination table.
+//
+//the above data will be logged to the redux and we shall map it to props and use.
+
+
+class Results extends Component {
+    state={
+        GIN:'', searchValue:''
+    }
+
+    componentDidMount(){
+        //load data for the route of innerJoin and the user data here
+    }
+
+
+    demandClick=(key)=>{
+        this.setState({GIN:key})
+    }
+
+    handleSearchChange=e=>{
+        this.setState({searchValue:e.target.value})
+    }
+
+    handleBackBtn=()=>{
+        this.setState({GIN:''})
+    }
+
+    render() {
+        return (
+            <ComponentMould>
+                <Block pageName='Your Results' message='Get your results or search for them using the SIN or GIN of the request' />
+                <div className="result-body">
+                    {this.state.GIN!=='' && !isNaN(this.state.GIN)?
+                        <StyleReceipt receipt={false} GIN={this.state.GIN} handleBackBtn={this.handleBackBtn} />
+                        :
+                        <React.Fragment>
+                            <input type='text' placeholder='Search GIN...' onChange={this.handleSearchChange} className='result-search' />
+                            <StyleDemands searchValue={this.state.searchValue} demandClick={this.demandClick} />
+                        </React.Fragment>
+                    }
+                </div>
+            </ComponentMould>
+        )
+    }
 }
 
-function getUserMedExamDemands(){
-    //here we are going to get all the med Exams of the user and order them by date(desc) most recent to oldest
-    let idUser = getUserId;
-    return props.medicalExamDemand.filter(aDemand=>aDemand.idUser === idUser).sort((a,b)=>new Date(a.dateCreated)>new date(b.dateCreated)?-1:1)
-}
-
-function medExamDmdHasExam_Of_Demands(){
-    //here we are going to get the exams in the various demands so we can make the list.
-    let demands = getUserMedExamDemands()
-    demands.map(aDemand=>{
-        
-    })
-
-}
-
-function Results(props) {
-    return (
-        <ComponentMould>
-            <Block pageName='Your Results' message='Get your results or search for them using the SIN or GIN of the request' />
-            <div className="resultBody">
-                <input type='search' className='result-search' />
-
-            </div>
-        </ComponentMould>
-    )
-}
 
 const mapStateToProps = state =>{
     return{
-        examination: state.Examination.examinations,
-        medicalExamDemandHasExamination: state.MedExamDemandHasExam.medExamDemandHasExam,
-        medExamResult: state.MedExamResult.medExamResult,
-        medicalExamDemand: state.MedicalEamDemand.medicalExamDemand
+        demandHasExamJoin: state.DemandHasExamJoin.demandHasExamJoin,
+        user: state.User.user
     }
 }
 

@@ -12,8 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function notifyIncompatiblePhoneService(){return toast.error('Phone number does not match paying service. verify and try again')}
 function notifyNoExam(){return toast.error('Must select at least an exam')}
-
-
+// function notifyDemandSuccess(){return toast.error('Must select at least an exam')}
+// function notifyDemandFailure(){return toast.error('Must select at least an exam')}
 
 function guessPayingService(phone){
     if(/^((6[5-9])|(2[2-3]))[0-9]{7}$/i.test(phone)){
@@ -101,7 +101,18 @@ function Validation(props){
                   demandAmount: calcultateTotal(props.selectedExams, values.choosenExam)
                 }
 
-                console.log(returnValues);
+                console.log( JSON.stringify(returnValues));
+                fetch('http://localhost:4000/api/demand/textDemand',{
+                  method:'post',
+                  headers: {'Content-Type': 'application/json'},
+                  body:JSON.stringify(returnValues)
+                })
+                .then(data=>data.json())
+                .then(result=>{
+                  if(result.success){
+
+                  }
+                })
                 //this is where you do a backend 
                 
                 //after the api call if the response is good, then you write to the state using the onNext supplied by props

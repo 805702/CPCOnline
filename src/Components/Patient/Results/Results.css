@@ -1,0 +1,171 @@
+.component-holder .result-body {
+    display: grid;
+    /* justify-self: center; */
+}
+
+.result-search {
+    justify-self: center;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.result-search:hover,
+.result-search:focus {
+    background-color: white;
+    border: 0.5px solid #f2f2f2;
+    outline: none;
+}
+
+.component-holder .result-body .grouped-demands {
+    margin: 20px 0 0 0;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1rem 1fr;
+    margin-bottom: 10px;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 7px 0 rgba(0, 0, 0, 0.19);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN:hover {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 10px 0 rgba(38, 150, 224, 0.19);
+    border: 1px solid rgba(38, 150, 224, 0.19);
+    outline: none;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-indicator {
+    width: 0.3rem;
+    padding: 0.3rem;
+    background-color: #0D9D0A;
+    border-radius: 10px;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data {
+    display: grid;
+    grid-auto-flow: row;
+    padding: 10px;
+    margin-right: 1rem;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .demand-GIN-data-group .demand-GIN-data-label {
+    font-style: normal;
+    margin-right: 5px;
+    font-weight: 500;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .demand-GIN-data-group .demand-GIN-data-value {
+    font-style: normal;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .btn-own {
+    margin-top: 5px;
+    background-color: #ee3333;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 3px;
+    justify-self: start;
+    cursor: pointer;
+}
+
+.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .btn-own:hover {
+    transition: 0.3s;
+    background-color: #c90a0a;
+}
+
+
+/* ------------------------------- Receipt ------------------------------------ */
+
+.component-holder .receipt-header {
+    display: grid;
+}
+
+.component-holder .receipt-back-btn {
+    padding: 5px;
+    background-color: #ee3333;
+    width: fit-content;
+    color: white;
+    border-radius: 50%;
+}
+
+.component-holder .receipt-header-line:nth-of-type(3) .component-holder .receipt-header-line:nth-of-type(3) {
+    width: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.component-holder .receipt-header .receipt-header-line i {
+    font-style: normal;
+    font-size: 0.8rem;
+}
+
+.component-holder .receipt-header .receipt-header-line {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 5rem 1fr;
+}
+
+.component-holder .receipt-header .receipt-header-line i:nth-of-type(1) {
+    font-weight: bold;
+}
+
+.component-holder .receipt-header .receipt-header-line:first-of-type {
+    grid-template-columns: 7.5rem 1fr;
+    margin: 10px 0;
+    font-weight: bolder;
+}
+
+.component-holder .receipt-header .receipt-header-line:first-of-type i:nth-of-type(1) {
+    font-weight: bolder;
+}
+
+.component-holder .receipt-header .receipt-header-line:first-of-type i:nth-of-type(2) {
+    justify-self: end;
+}
+
+
+/* ------------------- receipt-footer ---------------------- */
+
+.component-holder .receipt-footer {
+    display: grid;
+}
+
+.component-holder .receipt-footer .receipt-footer-line {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.component-holder .receipt-footer .receipt-footer-line i {
+    font-style: normal;
+}
+
+.component-holder .receipt-footer>i {
+    justify-self: center;
+    font-style: normal;
+    color: #ee3333;
+}
+
+@media (min-width:680px) {
+    .component-holder .receipt-header .receipt-header-line i {
+        font-style: normal;
+        font-size: 1rem;
+    }
+    .component-holder .receipt-header .receipt-header-line {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 7rem 1fr;
+    }
+    .component-holder .receipt-header .receipt-header-line:first-of-type {
+        grid-template-columns: 10rem 1fr;
+    }
+    .component-holder .receipt-header .receipt-header-line:first-of-type i:last-of-type {
+        font-size: 0.85rem;
+    }
+}
