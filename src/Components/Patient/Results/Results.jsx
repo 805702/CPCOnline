@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import Block from '../../../Global/Block/Block'
 import ComponentMould from '../../../Global/ComponentMould/ComponentMould'
 import './Results.css'
 import StyleReceipt from './StyleReceipt/StyleReceipt';
 import StyleDemands from './StyleDemands/StyleDemands'
+import parseJwt from '../../../utils/parseJwt';
 
 //when this page is loaded, all the results pertaining to the patient is loaded automatically from the backend
 //the backend will provide two crucial information
@@ -25,6 +27,22 @@ class Results extends Component {
 
     componentDidMount(){
         //load data for the route of innerJoin and the user data here
+        let token = localStorage.getItem('userToken')
+        let parsedToken = parseJwt(token)
+        if(Number(parsedToken.phoneUser)===undefined || parsedToken.phoneUser==='')this.props.history.push('/')
+        else{
+            fetch('http://localhost:4000/api/result/getPatientResultData',{
+                body:JSON.stringify({phone:parsedToken.phoneUser}),
+                headers: {'Content-Type': 'application/json'},
+                method:'post'
+            }).then(data=>data.json())
+            .then(result=>{
+                console.log(result.user.user)
+                this.props.dispatch({type:'LOAD_DEMAND_HAS_EXAM_JOIN', payload:result.demandHasExamJoin})
+                this.props.dispatch({type:'LOAD_MED_EXAM_RESULT', payload:result.medExamResult})
+                this.props.dispatch({type:'LOAD_USER', payload:result.user.user})
+            }).catch(err=>console.log(err))
+        }
     }
 
 
@@ -67,4 +85,4 @@ const mapStateToProps = state =>{
     }
 }
 
-export default connect(mapStateToProps)(Results)
+export default withRouter(connect(mapStateToProps)(Results))

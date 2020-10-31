@@ -34,9 +34,9 @@ const initState = {
 }
 
 const medExamResult =(state=initState, action)=>{
-    switch(action.types){
+    switch(action.type){
         case 'LOAD_MED_EXAM_RESULT':
-            return {...state, medExamResult:[action.payload]}
+            return {...state, medExamResult:action.payload}
         case 'CREATE_MED_EXAM_RESULT':
             return {...state, medExamResult:[...state.medExamResult, action.payload]}
         default:

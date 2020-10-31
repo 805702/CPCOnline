@@ -16,7 +16,7 @@ function Code(props) {
             <Block pageName='Welcome'>
                 <UserLogin login={props.login} />
             </Block>
-            <CodeForm />
+            <CodeForm dispatch={props.dispatch} />
         </ComponentMould>
     )
 }

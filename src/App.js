@@ -14,17 +14,17 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-            <Route exact path='/' component={Signin} />
-            <Route exact path='/demand' component={RequestEstimate} />
+            <Route exact path='/'><Signin dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/demand'> <RequestEstimate dispatch={this.props.dispatch} /></Route>
             <Route exact path='/login/:login' render={
               ()=>{
                 const login = window.location.pathname.split('_')
                 if(login.length === 2 && /^((6[5-9])|(2[2-3]))[0-9]{7}$/i.test(login[1])){
                   switch(login[0]){
                     case '/login/password':
-                      return <Password login={login[1]} />
+                      return <Password login={login[1]} dispatch={this.props.dispatch} />
                     case '/login/code':
-                      return <Code login={login[1]} />
+                      return <Code login={login[1]} dispatch={this.props.dispatch} />
                     default:
                       return <Redirect to='/' />
                   }
@@ -44,7 +44,7 @@ class App extends Component {
                 }
               }
             } /> */}
-            <Route exact path='/result' component={Results} />
+            <Route exact path='/result'><Results dispatch={this.props.dispatch} /></Route>
             <Redirect to='/' />
         </Switch>
       </Router>

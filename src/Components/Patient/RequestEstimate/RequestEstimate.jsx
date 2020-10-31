@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Block from '../../../Global/Block/Block'
 import ComponentMould from '../../../Global/ComponentMould/ComponentMould'
 import Identification from './Identification/Identification'
@@ -35,18 +36,18 @@ class RequestEstimate extends Component {
      * validate: validate and confirm request (only for text entryMethod)
      */
     componentDidMount(){
-        fetch("http://localhost:4000/api/exams/getExams",{
-            method:"get",
-            headers: {'Content-Type': 'application/json'},
-        })
-        .then(data=>data.json())
-        .then(result=>{
-            console.log(result.exams)
-            //push the exams to state.
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+        if(this.props.user.roleUser !=="" && this.props.user.roleUser!=='visitor'){
+            const identification ={
+                phone: this.props.user.phoneUser,
+                fname: this.props.user.firstNameUser,
+                lname: this.props.user.lastNameUser,
+                dob: this.props.user.dateOfBirthUser,
+                gender: this.props.user.genderUser.toUpperCase(),
+                email: this.props.user.emailUser
+            }
+            this.setState({identification})
+        }
+
     }
 
     blockMessage=()=>{
@@ -73,8 +74,12 @@ class RequestEstimate extends Component {
                 case 'next':
                     switch(this.state.step){
                         case 'exams':
-                            if(this.state.entryMethod==='text') return this.setState({selectExams:data, step:'iden'})
-                            else return this.setState({step:'iden', images:data})
+                            let step=''
+                            if(this.props.user.roleUser !=="" && this.props.user.roleUser!=='visitor'){
+                                step='med'
+                            }else step='iden'
+                            if(this.state.entryMethod==='text')return this.setState({selectExams:data, step:step})
+                            else return this.setState({step:step, images:data})
                         case 'iden':
                             return this.setState({step:'med', identification:data})
                         case 'med':
@@ -88,7 +93,12 @@ class RequestEstimate extends Component {
                         case 'iden':
                             return this.setState({step:'exams', identification:data})
                         case 'med':
-                            return this.setState({step:'iden', medPersonnel:data})
+                            let step=''
+                            if(this.props.user.roleUser !=="" && this.props.user.roleUser!=='visitor'){
+                                step='exams'
+                            }else step='iden'
+
+                            return this.setState({step:step, medPersonnel:data})
                         case 'validate':
                             return this.setState({step:'med'})
                         default: return ''
@@ -101,14 +111,16 @@ class RequestEstimate extends Component {
     examSelection=()=>{
         return(
             <div className="entry-method-container">
-                <div className="entry-method-tab">
+                {this.props.user.roleUser==='visitor' || this.props.user.roleUser==='patient' || this.props.user.roleUser===undefined
+                ?<div className="entry-method-tab">
                     <i className={`fa fa-pencil entry-mthd-tab-elmt ${this.state.entryMethod==='text'?'active-entry-method':''}`} onClick={()=>this.changeEntryMethod('text')} />
                     <i className={`fa fa-camera-retro entry-mthd-tab-elmt ${this.state.entryMethod==='image'?'active-entry-method':''}`} onClick={()=>this.changeEntryMethod('image')} />
-                </div>
+                </div>:null}
 
                 <div className="entry-method-holder">
                     {this.state.entryMethod==='text'?<TextDemand onNext={this.handleNextBtn} selectedExams={this.state.selectExams} />:null}
-                    {this.state.entryMethod==='image'?<ImageDemand onNext={this.handleNextBtn} images={this.state.images} />:null}
+                    {this.state.entryMethod==='image' && (this.props.user.roleUser==='visitor' || this.props.user.roleUser==='patient' || this.props.user.roleUser===undefined)
+                    ?<ImageDemand onNext={this.handleNextBtn} images={this.state.images} />:null}
                 </div>
             </div>
         )
@@ -146,4 +158,10 @@ class RequestEstimate extends Component {
     }
 }
 
-export default RequestEstimate
+const mapStateToProps=state=>{
+    return{
+        user: state.User.user
+    }
+}
+
+export default connect(mapStateToProps)(RequestEstimate)

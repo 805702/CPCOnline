@@ -23,12 +23,29 @@ class TextDemand extends Component {
     }
 
     componentDidMount=()=>{
-        let exams = this.props.examination.map(exam=>{
-            return {...exam, label:exam.nameExamination, value:exam.idExamination}
+
+        fetch("http://localhost:4000/api/exams/getExams",{
+            method:"get",
+            headers: {'Content-Type': 'application/json'},
         })
-        exams = exams.sort((a,b)=>a.label.toLowerCase()<b.label.toLowerCase()?-1:1)
-        const {selectedExams} = this.props
-        this.setState({options:exams, selectedExams})
+        .then(data=>data.json())
+        .then(result=>{
+            this.props.dispatch({type:'LOAD_EXAMS', payload:result.exams})
+            let exams = this.props.examination.map(exam=>{
+                return {...exam, label:exam.nameExamination, value:exam.idExamination}
+            })
+            exams = exams.sort((a,b)=>a.label.toLowerCase()<b.label.toLowerCase()?-1:1)
+            const {selectedExams} = this.props
+            exams=exams.filter(anExam=>{
+                let ansHolder = selectedExams.find(exam=>exam.idExamination===anExam.idExamination)
+                return ansHolder===undefined?true:false
+            })
+            this.setState({options:exams, selectedExams})
+        })
+        .catch(err=>{
+            // console.log(err)
+        })
+
     }
 
     onUserChosesExam=(e)=>{
@@ -74,7 +91,7 @@ class TextDemand extends Component {
                 <Scrollbars className='demand-scrollbar'>
                     {this.state.selectedExams.map(selectedExam=> (
                         <div className="exm-dmd-tbl-row" key={selectedExam.idExamination}>
-                            <input type='checkbox' checked={true} value={selectedExam.idExamination} onClick={this.onRemoveFromSelectedList} />
+                            <input type='checkbox' checked={true} onChange={this.onRemoveFromSelectedList} value={selectedExam.idExamination} onClick={this.onRemoveFromSelectedList} />
                             <i>{selectedExam.label}</i>
                             <i>{selectedExam.bValue*105}</i>
                         </div>

@@ -13,7 +13,7 @@ function Password(props) {
       <Block pageName='Welcome'>
           <UserLogin login={props.login} />
       </Block>
-      <PasswordForm />
+      <PasswordForm dispatch={props.dispatch} />
     </ComponentMould>
   )
 }

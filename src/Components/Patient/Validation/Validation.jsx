@@ -1,8 +1,11 @@
 import * as Yup from 'yup';
 import React from 'react';
+import { connect } from 'react-redux'
 import { Formik, Form, Field } from "formik";
 import { Scrollbars } from "react-custom-scrollbars";
 import { ToastContainer, toast } from 'react-toastify';
+import BarLoader from 'react-bar-loader';
+
 
 import OM from '../../../assets/OM.svg';
 import MOMO from '../../../assets/MOMO.svg';
@@ -73,9 +76,11 @@ function Validation(props){
       <React.Fragment>
         <Formik
           initialValues={{
-            payingPhone: props.identification.phone,
-            payingService: guessPayingService(props.identification.phone)
-              ? guessPayingService(props.identification.phone)
+            payingPhone: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.phoneUser:props.identification.phone,
+            payingService: props.user.roleUser!=='visitor' && props.user.roleUser !==""
+            ?guessPayingService(props.user.phoneUser):guessPayingService(props.identification.phone)
+              ? (props.user.roleUser!=='visitor' && props.user.roleUser !==""
+            ?guessPayingService(props.user.phoneUser):guessPayingService(props.identification.phone))
               : "",
               choosenExam:initiateChoosenExam(props.selectedExams)
           }}
@@ -88,46 +93,56 @@ function Validation(props){
               .required("Required"),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              if(validatePayingService(values.payingPhone, values.payingService)){
-                if(values.choosenExam.length!==0){
-                let returnValues = {
-                  choosenExam:values.choosenExam,
-                  payingPhone:Number(values.payingPhone),
-                  payingService:values.payingService,
-                  identification:props.identification,
-                  medPersonnel:props.medPersonnel,
-                  entryMethod:props.entryMethod,
-                  demandAmount: calcultateTotal(props.selectedExams, values.choosenExam)
+            if(validatePayingService(values.payingPhone, values.payingService)){
+              if(values.choosenExam.length!==0){
+              let returnValues = {
+                choosenExam:values.choosenExam,
+                payingPhone:Number(values.payingPhone),
+                payingService:values.payingService,
+                identification:props.identification,
+                medPersonnel:props.medPersonnel,
+                entryMethod:props.entryMethod,
+                demandAmount: calcultateTotal(props.selectedExams, values.choosenExam)
+              }
+
+              fetch('http://localhost:4000/api/demand/textDemand',{
+                method:'post',
+                headers: {'Content-Type': 'application/json'},
+                body:JSON.stringify(returnValues)
+              })
+              .then(data=>data.json())
+              .then(result=>{
+                if(result.SIN){
+                  let data={SIN:`SYS - ${result.SIN.slice(0,4)} - ${result.SIN.slice(4,8)}`, status:true}
+                  props.onNext('next', data)
+                }else{
+                  props.onNext('next', {status:false})
                 }
-
-                console.log( JSON.stringify(returnValues));
-                fetch('http://localhost:4000/api/demand/textDemand',{
-                  method:'post',
-                  headers: {'Content-Type': 'application/json'},
-                  body:JSON.stringify(returnValues)
-                })
-                .then(data=>data.json())
-                .then(result=>{
-                  if(result.success){
-
-                  }
-                })
-                //this is where you do a backend 
-                
-                //after the api call if the response is good, then you write to the state using the onNext supplied by props
-                //the response from the backend will contain the SIN and and status
-                //the status is true or false. indicating the state of the demand
-                let data={SIN:'SYS - 085 - 965', status:'true'}
-                props.onNext('next',data)
-              }else notifyNoExam()
-              }else notifyIncompatiblePhoneService()
+                setSubmitting(false);
+              }).catch(err=>{
+                props.onNext('next', {status:false})
+                setSubmitting(false);
+              })
+              //this is where you do a backend 
+              
+              //after the api call if the response is good, then you write to the state using the onNext supplied by props
+              //the response from the backend will contain the SIN and and status
+              //the status is true or false. indicating the state of the demand
+              // let data={SIN:'SYS - 085 - 965', status:'true'}
+              // props.onNext('next',data)
+              }else {
+                notifyNoExam()
+                setSubmitting(false);
+              }
+            }else {
+              notifyIncompatiblePhoneService()
               setSubmitting(false);
-            },100);
+            }
           }}
         >
-          {({ values, setFieldValue, touched, errors }) => (
+          {({ values, setFieldValue, touched, errors, isSubmitting }) => (
             <Form className="component-form no-margin-form">
+              {isSubmitting?<BarLoader color="#0D9D0A" height="5" />:null}
               <span className="guidan">
                 <label htmlFor="payingPhone">Paying phone</label>
                 {touched.payingPhone && errors.payingPhone ? (
@@ -272,4 +287,10 @@ function Validation(props){
     );
 }
 
-export default Validation
+const mapStateToProps=state=>{
+  return{
+    user:state.User.user
+  }
+}
+
+export default connect(mapStateToProps)(Validation)

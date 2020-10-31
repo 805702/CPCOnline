@@ -3,7 +3,6 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import BarLoader from 'react-bar-loader';
-import parseJwt from '../../../utils/parseJwt'
 import { withRouter } from 'react-router-dom';
 
 class CodeForm extends Component {
@@ -85,11 +84,9 @@ class CodeForm extends Component {
 
                 }
                 else{
-                  console.log(result)
                   localStorage.setItem("userToken",result.token)
                   //redirect to the right home page
                   if(result.role==='patient' || result.role==='visitor') {
-                    console.log(parseJwt(result.token))
                     this.props.history.push('/patientHome')
                   }
                 //   else {

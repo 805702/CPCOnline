@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';import { ToastContainer, toast } from 'react-toastify';
 import { withRouter } from 'react-router-dom';
-import parseJwt from '../../../utils/parseJwt';
 import BarLoader from 'react-bar-loader';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -56,11 +55,9 @@ class PasswordForm extends Component {
                       })
                     }
                     else{
-                      console.log(result)
                       localStorage.setItem("userToken",result.token)
                       //redirect to the right home page
                       if(result.role==='admin') {
-                        console.log(parseJwt(result.token))
                         this.props.history.push('/adminHome')
                       }else if(result.role==='operator'){
                         this.props.history.push('/operatorHome')

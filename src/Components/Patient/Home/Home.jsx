@@ -13,7 +13,7 @@ class Home extends Component{
             method:'post',
             headers: {'Content-Type': 'application/json'},
             body:JSON.stringify({
-                idUser:parseJwt(userToken).phoneUser
+                phone:parseJwt(userToken).phoneUser
             })
         })
         .then(data=>data.json())

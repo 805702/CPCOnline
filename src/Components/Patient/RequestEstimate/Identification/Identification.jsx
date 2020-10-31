@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { connect } from 'react-redux'
 
 import './Identification.css'
 
@@ -8,12 +9,12 @@ function Identification(props) {
     return (
       <Formik
         initialValues={{
-          phone: props.identification.phone,
-          fname: props.identification.fname,
-          lname: props.identification.lname,
-          dob: props.identification.dob,
-          gender: props.identification.gender,
-          email: props.identification.email,
+          phone: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.phoneUser:props.identification.phone,
+          fname: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.firstNameUser:props.identification.fname,
+          lname: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.lastNameUser:props.identification.lname,
+          dob: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.dateOfBirthUser:props.identification.dob,
+          gender: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.genderUser.toUpperCase():props.identification.gender,
+          email: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.emailUser:props.identification.email,
           EndDate:Date.now()
         }}
         validationSchema={Yup.object({
@@ -48,7 +49,7 @@ function Identification(props) {
                 <i className="error">{errors.phone}</i>
               ) : null}
             </span>
-            <Field name="phone" type="text" />
+            <Field name="phone" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
             <i className="ex-message">
               <i>Example: </i>
               <b>657140183 (cameroonian number)</b>
@@ -60,7 +61,7 @@ function Identification(props) {
                 <i className="error">{errors.fname}</i>
               ) : null}
             </span>
-            <Field name="fname" type="text" />
+            <Field name="fname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
 
             <span className="guidan">
               <label htmlFor="lname">Last name</label>
@@ -68,7 +69,7 @@ function Identification(props) {
                 <i className="error">{errors.lname}</i>
               ) : null}
             </span>
-            <Field name="lname" type="text" />
+            <Field name="lname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
 
             <span className="guidan">
               <label htmlFor="dob">Date of birth</label>
@@ -76,7 +77,7 @@ function Identification(props) {
                 <i className="error">{errors.dob}</i>
               ) : null}
             </span>
-            <Field name="dob" type="date" className="date-input" />
+            <Field name="dob" type="date" className="date-input" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
             <i className="ex-message">
               <i>Format: </i>
               <b>JJ - MM - YYYY</b>
@@ -88,7 +89,7 @@ function Identification(props) {
                 <i className="error">{errors.email}</i>
               ) : null}
             </span>
-            <Field name="email" type="email" />
+            <Field name="email" type="email" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
             <i className="ex-message">
               <i>Example: </i>
               <b>test@test.com</b>
@@ -110,6 +111,7 @@ function Identification(props) {
                   id="M"
                   checked={values.gender === "M"}
                   onChange={() => setFieldValue("gender", "M")}
+                  disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
                 />
               </div>
               <div className="radio-group">
@@ -121,6 +123,7 @@ function Identification(props) {
                   id="F"
                   checked={values.gender === "F"}
                   onChange={() => setFieldValue("gender", "F")}
+                  disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
                 />
               </div>
             </div>
@@ -135,4 +138,10 @@ function Identification(props) {
     );
 }
 
-export default Identification
+const mapStateToProps=state=>{
+  return{
+    user:state.User.user
+  }
+}
+
+export default connect(mapStateToProps)(Identification)
