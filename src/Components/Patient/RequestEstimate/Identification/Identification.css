@@ -77,3 +77,18 @@
 .txt-entry-mthd-btns button:focus {
     outline: none;
 }
+
+.component-container .component-holder .not-auth-user {
+    display: grid;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.not-auth-user>i {
+    font-style: normal;
+}
+
+.not-auth-user>i>a {
+    color: rgb(95, 129, 223);
+    text-decoration: none;
+}

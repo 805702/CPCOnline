@@ -1,0 +1,16 @@
+/* .confirm-demand-container {
+    padding: 0, ;
+} */
+
+.confirm-demand-container .confirm-demand-holder .demand-line:nth-child(even) {
+    background-color: #e5e5e5;
+}
+
+.confirm-demand-container .confirm-demand-holder .demand-line:nth-child(odd) {
+    background-color: white;
+    color: #ee3333;
+}
+
+.confirm-demand-container #confirm-scrollbars {
+    height: 50vw;
+}

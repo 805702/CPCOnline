@@ -31,13 +31,16 @@ function StyleReceipt(props){
         return total*105
     }
 
+    let dateDemanded = exams[0].dateCreated.split('T')
+    dateDemanded[1]= dateDemanded[1].split('.0')[0]
+    dateDemanded =dateDemanded.join(' ')
     return(
         <React.Fragment>
             <i className="fa fa-arrow-left receipt-back-btn" onClick={()=>props.handleBackBtn()} />
             <div className="receipt-header">
                 <span className="receipt-header-line">
                     <i className="receipt-header-line-name">CENTRE PASTEUR</i>
-                    <i className="receipt-header-line-value">Yaounde le {exams[0].dateCreated}</i>
+                    <i className="receipt-header-line-value">Yaounde le {dateDemanded}</i>
                 </span>
                 <span className="receipt-header-line">
                     <i className="receipt-header-line-name">Demand id</i>
@@ -56,6 +59,9 @@ function StyleReceipt(props){
             <div className="grouped-demands">
                 {exams.map(anExam=>{
                     let examResult = props.medExamResult.find(medExamResult=>medExamResult.idMedExamDemandExamination === anExam.idMedExamDemandExamination)
+                    let dueDate = examResult.dueDate.split('T')
+                    dueDate[1]= dueDate[1].split('.0')[0]
+                    dueDate =dueDate.join(' ')
                     return(
                         <div className="demand-GIN" key={anExam.idMedExamDemandExamination}>
                             <div className="demand-GIN-indicator"></div>
@@ -82,7 +88,7 @@ function StyleReceipt(props){
                                 :
                                 <span className="demand-GIN-data-group">
                                     <i className="demand-GIN-data-label">Due Date:</i>
-                                    <i className="demand-GIN-data-value">{examResult.dueDate}</i>
+                                    <i className="demand-GIN-data-value">{dueDate}</i>
                                 </span>
                                 }
                             </div>

@@ -1,16 +1,24 @@
 import { combineReducers } from 'redux';
 
-import examReducer from './Exam.reducer';
-import notificationReducer from './Notification.reducer';
 import demandHasExamJoinReducer from './DemandHasExamJoin';
-import medExamResult from './MedExamResult';
+import examReducer from './Exam.reducer';
+import medExamResultReducer from './MedExamResult';
+import medicalExamDemandReducer from './MedicalExamDemand';
+import medPReducer from './MedP';
+import notificationReducer from './Notification.reducer';
+import patientReducer from './Patient';
+import requestExamsReducer from './RequestExams';
 import userReducer from './User';
 
 const rootReducer = combineReducers({
-    Examination: examReducer,
-    Notification: notificationReducer,
     DemandHasExamJoin:demandHasExamJoinReducer,
-    MedExamResult: medExamResult,
+    Examination: examReducer,
+    MedExamResult: medExamResultReducer,
+    MedicalExamDemand: medicalExamDemandReducer,
+    MedP:medPReducer,
+    Notification: notificationReducer,
+    Patient:patientReducer,
+    RequestExams:requestExamsReducer,
     User:userReducer,
     
 });

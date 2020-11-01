@@ -1,0 +1,67 @@
+.GINConfirm-holder,
+.GINConfirm-holder .GINConfirm-identification {
+    display: grid;
+    margin: 10px 0;
+}
+
+.GINConfirm-holder .GINConfirm-page-hdr {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+}
+
+.GINConfirm-holder .GINConfirm-page-hdr .GINConfirm-req-number {
+    justify-self: center;
+    font-style: normal;
+}
+
+.GINConfirm-holder .GINConfirm-identification i {
+    font-style: normal;
+}
+
+.GINConfirm-holder .GINConfirm-identification .GINConfirm-iden-info i {
+    font-weight: bold;
+}
+
+.GINConfirm-hdr,
+.GINConfirm-row {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+}
+
+.GINConfirm-hdr i,
+.GINConfirm-row i {
+    font-style: normal;
+}
+
+.GINConfirm-hdr .exam-info,
+.GINConfirm-row .exam-info {
+    padding-left: 10px;
+}
+
+.GINConfirm-hdr {
+    background-color: black;
+    color: white;
+}
+
+.GINConfirm-row {
+    border-bottom: 1px solid black;
+    margin-bottom: 2px;
+}
+
+.GINConfirm-holder .GINConfirm-exams {
+    display: grid;
+}
+
+.GINConfirm-exams-confirm .no-margin-form button {
+    justify-self: end;
+    height: 2rem;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #0D9D0A;
+}
+
+.GINConfirm-exams-confirm .GINConfirm-form {
+    width: 100%;
+}

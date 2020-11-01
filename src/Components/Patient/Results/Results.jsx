@@ -28,8 +28,8 @@ class Results extends Component {
     componentDidMount(){
         //load data for the route of innerJoin and the user data here
         let token = localStorage.getItem('userToken')
-        let parsedToken = parseJwt(token)
-        if(Number(parsedToken.phoneUser)===undefined || parsedToken.phoneUser==='')this.props.history.push('/')
+        let parsedToken = token===null?undefined:parseJwt(token)
+        if(token===null || parseJwt(token).phoneUser==='' )this.props.history.push('/')
         else{
             fetch('http://localhost:4000/api/result/getPatientResultData',{
                 body:JSON.stringify({phone:parsedToken.phoneUser}),
@@ -63,7 +63,7 @@ class Results extends Component {
             <ComponentMould>
                 <Block pageName='Your Results' message='Get your results or search for them using the SIN or GIN of the request' />
                 <div className="result-body">
-                    {this.state.GIN!=='' && !isNaN(this.state.GIN)?
+                    {this.state.GIN!=='' && !isNaN(this.state.GIN) ?
                         <StyleReceipt receipt={false} GIN={this.state.GIN} handleBackBtn={this.handleBackBtn} />
                         :
                         <React.Fragment>

@@ -33,6 +33,9 @@ function StyleDemands(props){
         return(
             <div className="grouped-demands">
                 {demandGIN.map(aDemand=>{
+                    let dateDemanded = aDemand.dateDemanded.split('T')
+                    dateDemanded[1]= dateDemanded[1].split('.0')[0]
+                    dateDemanded =dateDemanded.join(' ')
                     return (
                         <div className="demand-GIN" key={aDemand.GIN} onClick={()=>props.demandClick(aDemand.GIN)}>
                             <div className="demand-GIN-indicator"></div>
@@ -42,8 +45,8 @@ function StyleDemands(props){
                                     <i className="demand-GIN-data-value">{aDemand.GIN}</i>
                                 </span>
                                 <span className="demand-GIN-data-group">
-                                    <i className="demand-GIN-data-label">Demand id:</i>
-                                    <i className="demand-GIN-data-value">{aDemand.dateDemanded}</i>
+                                    <i className="demand-GIN-data-label">Demand  date:</i>
+                                    <i className="demand-GIN-data-value">{dateDemanded}</i>
                                 </span>
                             </div>
                         </div>

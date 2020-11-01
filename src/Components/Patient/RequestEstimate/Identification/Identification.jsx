@@ -4,8 +4,11 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux'
 
 import './Identification.css'
+import parseJwt from '../../../../utils/parseJwt';
+import { Link } from 'react-router-dom';
 
 function Identification(props) {
+  console.log(props.token)
     return (
       <Formik
         initialValues={{
@@ -42,97 +45,101 @@ function Identification(props) {
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
-          <Form className="component-form no-margin-form">
-            <span className="guidan">
-              <label htmlFor="Phone">Phone</label>
-              {touched.phone && errors.phone ? (
-                <i className="error">{errors.phone}</i>
-              ) : null}
-            </span>
-            <Field name="phone" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
-            <i className="ex-message">
-              <i>Example: </i>
-              <b>657140183 (cameroonian number)</b>
-            </i>
+          (!(props.token===null || parseJwt(props.token).phoneUser==='') )?
+            <Form className="component-form no-margin-form">
+              <span className="guidan">
+                <label htmlFor="Phone">Phone</label>
+                {touched.phone && errors.phone ? (
+                  <i className="error">{errors.phone}</i>
+                ) : null}
+              </span>
+              <Field name="phone" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <i className="ex-message">
+                <i>Example: </i>
+                <b>657140183 (cameroonian number)</b>
+              </i>
 
-            <span className="guidan">
-              <label htmlFor="fname">First name</label>
-              {touched.fname && errors.fname ? (
-                <i className="error">{errors.fname}</i>
-              ) : null}
-            </span>
-            <Field name="fname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <span className="guidan">
+                <label htmlFor="fname">First name</label>
+                {touched.fname && errors.fname ? (
+                  <i className="error">{errors.fname}</i>
+                ) : null}
+              </span>
+              <Field name="fname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
 
-            <span className="guidan">
-              <label htmlFor="lname">Last name</label>
-              {touched.lname && errors.lname ? (
-                <i className="error">{errors.lname}</i>
-              ) : null}
-            </span>
-            <Field name="lname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <span className="guidan">
+                <label htmlFor="lname">Last name</label>
+                {touched.lname && errors.lname ? (
+                  <i className="error">{errors.lname}</i>
+                ) : null}
+              </span>
+              <Field name="lname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
 
-            <span className="guidan">
-              <label htmlFor="dob">Date of birth</label>
-              {touched.dob && errors.dob ? (
-                <i className="error">{errors.dob}</i>
-              ) : null}
-            </span>
-            <Field name="dob" type="date" className="date-input" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
-            <i className="ex-message">
-              <i>Format: </i>
-              <b>JJ - MM - YYYY</b>
-            </i>
+              <span className="guidan">
+                <label htmlFor="dob">Date of birth</label>
+                {touched.dob && errors.dob ? (
+                  <i className="error">{errors.dob}</i>
+                ) : null}
+              </span>
+              <Field name="dob" type="date" className="date-input" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <i className="ex-message">
+                <i>Format: </i>
+                <b>JJ - MM - YYYY</b>
+              </i>
 
-            <span className="guidan" id="cancel-last-span">
-              <label htmlFor="email">Email</label>
-              {touched.email && errors.email ? (
-                <i className="error">{errors.email}</i>
-              ) : null}
-            </span>
-            <Field name="email" type="email" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
-            <i className="ex-message">
-              <i>Example: </i>
-              <b>test@test.com</b>
-            </i>
+              <span className="guidan" id="cancel-last-span">
+                <label htmlFor="email">Email</label>
+                {touched.email && errors.email ? (
+                  <i className="error">{errors.email}</i>
+                ) : null}
+              </span>
+              <Field name="email" type="email" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <i className="ex-message">
+                <i>Example: </i>
+                <b>test@test.com</b>
+              </i>
 
-            <span className="guidan" id="cancel-last-span">
-              <label htmlFor="email">Gender</label>
-              {touched.gender && errors.gender ? (
-                <i className="error">{errors.gender}</i>
-              ) : null}
-            </span>
-            <div className="gender-radio">
-              <div className="radio-group">
-                <label htmlFor="M">Male</label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="M"
-                  id="M"
-                  checked={values.gender === "M"}
-                  onChange={() => setFieldValue("gender", "M")}
-                  disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
-                />
+              <span className="guidan" id="cancel-last-span">
+                <label htmlFor="email">Gender</label>
+                {touched.gender && errors.gender ? (
+                  <i className="error">{errors.gender}</i>
+                ) : null}
+              </span>
+              <div className="gender-radio">
+                <div className="radio-group">
+                  <label htmlFor="M">Male</label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="M"
+                    id="M"
+                    checked={values.gender === "M"}
+                    onChange={() => setFieldValue("gender", "M")}
+                    disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
+                  />
+                </div>
+                <div className="radio-group">
+                  <label htmlFor="F">Female</label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="F"
+                    id="F"
+                    checked={values.gender === "F"}
+                    onChange={() => setFieldValue("gender", "F")}
+                    disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
+                  />
+                </div>
               </div>
-              <div className="radio-group">
-                <label htmlFor="F">Female</label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="F"
-                  id="F"
-                  checked={values.gender === "F"}
-                  onChange={() => setFieldValue("gender", "F")}
-                  disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
-                />
+              <div className="idnt-btns">
+                  <button type='button' className='btn-cancel' onClick={()=>props.onNext('back',values)} >
+                    <i className='fa fa-arrow-left'>Back</i></button>
+                  <button type='submit' className='btn-nxt'>Next</button>
               </div>
+            </Form>:
+            <div className="not-auth-user">
+              <i>Invalid User please <Link to='/'>Sign in</Link> to continue your actions</i>
             </div>
-            <div className="idnt-btns">
-                <button type='button' className='btn-cancel' onClick={()=>props.onNext('back',values)} >
-                  <i className='fa fa-arrow-left'>Back</i></button>
-                <button type='submit' className='btn-nxt'>Next</button>
-            </div>
-          </Form>
         )}
       </Formik>
     );

@@ -5,6 +5,8 @@ import Code from './Components/Authentication/Code/Code.jsx';
 // import Login from './Components/Authentication/Login/Login';
 import Password from './Components/Authentication/Password/Password';
 import Signin from './Components/Authentication/Signin/Signin';
+import Confirm from './Components/Operator/Demand/Confirm/Confirm';
+import GINConfirm from './Components/Operator/Demand/GINConfirm/GINConfirm';
 import Home from './Components/Patient/Home/Home';
 import RequestEstimate from './Components/Patient/RequestEstimate/RequestEstimate';
 import Results from './Components/Patient/Results/Results';
@@ -45,6 +47,7 @@ class App extends Component {
               }
             } /> */}
             <Route exact path='/result'><Results dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/confirmDemands'><GINConfirm dispatch={this.props.dispatch} /></Route>
             <Redirect to='/' />
         </Switch>
       </Router>

@@ -131,7 +131,7 @@ class RequestEstimate extends Component {
             <ComponentMould>
                 {this.state.step!=='confirm'?<Block pageName='Complete Your Request' message={this.blockMessage()} />:null}
                 {this.state.step==='exams'?this.examSelection():null}
-                {this.state.step==='iden'?<Identification onNext={this.handleNextBtn} identification={this.state.identification} />:null}
+                {this.state.step==='iden'?<Identification onNext={this.handleNextBtn} identification={this.state.identification} token={localStorage.getItem('userToken')} />:null}
                 {this.state.step==='validate'?
                     <Validation
                         identification={this.state.identification}
