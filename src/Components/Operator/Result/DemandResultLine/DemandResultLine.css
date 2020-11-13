@@ -1,0 +1,24 @@
+.demand-result-line-td .demand-result-btns {
+    margin: 0 0 10px 10px;
+}
+
+.demand-result-line-td .demand-result-btns button {
+    border: none;
+    padding: 5px;
+    margin-right: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.demand-result-line-td .demand-result-btns button:focus {
+    outline: none;
+}
+
+.demand-result-line-td .demand-result-btns button:first-of-type {
+    background-color: #0D9D0A;
+}
+
+.demand-result-line-td .demand-result-btns button:nth-of-type(2) {
+    background-color: #ee3333;
+}

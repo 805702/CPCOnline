@@ -74,6 +74,12 @@
     cursor: pointer;
 }
 
+.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .dwnld-btn {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .btn-own:hover {
     transition: 0.3s;
     background-color: #c90a0a;

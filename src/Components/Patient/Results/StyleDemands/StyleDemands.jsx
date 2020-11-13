@@ -14,14 +14,21 @@ let groupMedExamDemandByGIN=(demandHasExamJoin, searchValue)=>{
     let groupArray=[] //here i will have the different GIN's
     if(searchValue===''){
         demandHasExamJoin.map(ademandHasExam=>{
-            let test = groupArray.filter(GIN=>GIN.GIN===ademandHasExam.GIN)
+            let test = groupArray.filter(_=>_.GIN===ademandHasExam.GIN)
             if(test.length===0)groupArray.push({GIN:ademandHasExam.GIN, dateDemanded:ademandHasExam.dateCreated})
             return null
         })
     }
     else{
-        let test = demandHasExamJoin.find(ademandHasExam=>Number(searchValue) === ademandHasExam.GIN)
-        if (test !== undefined) groupArray.push(test)
+        let test = demandHasExamJoin.filter(ademandHasExam=>ademandHasExam.GIN.includes(searchValue))
+        if (test.length!==0) {
+            test.map(_=>{
+                let __ = groupArray.find(___=>___.GIN===_.GIN)
+                if (__ === undefined) groupArray.push({GIN:_.GIN, dateDemanded:_.dateCreated})
+                return null
+            })
+        //     // groupArray.push({GIN:test.GIN, dateDemanded:test.dateCreated})
+        }
     }
 
     return groupArray.sort((a,b)=>(new Date(a.dateDemanded))>(new Date(b.dateDemanded))?-1:1)

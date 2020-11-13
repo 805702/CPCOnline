@@ -37,7 +37,7 @@ class Results extends Component {
                 method:'post'
             }).then(data=>data.json())
             .then(result=>{
-                console.log(result.user.user)
+                console.log(result)
                 this.props.dispatch({type:'LOAD_DEMAND_HAS_EXAM_JOIN', payload:result.demandHasExamJoin})
                 this.props.dispatch({type:'LOAD_MED_EXAM_RESULT', payload:result.medExamResult})
                 this.props.dispatch({type:'LOAD_USER', payload:result.user.user})
@@ -64,7 +64,7 @@ class Results extends Component {
                 <Block pageName='Your Results' message='Get your results or search for them using the SIN or GIN of the request' />
                 <div className="result-body">
                     {this.state.GIN!=='' && !isNaN(this.state.GIN) ?
-                        <StyleReceipt receipt={false} GIN={this.state.GIN} handleBackBtn={this.handleBackBtn} />
+                        <StyleReceipt receipt={false} GIN={this.state.GIN} handleBackBtn={this.handleBackBtn} callingComponent='result'/>
                         :
                         <React.Fragment>
                             <input type='text' placeholder='Search GIN...' onChange={this.handleSearchChange} className='result-search' />
@@ -77,12 +77,4 @@ class Results extends Component {
     }
 }
 
-
-const mapStateToProps = state =>{
-    return{
-        demandHasExamJoin: state.DemandHasExamJoin.demandHasExamJoin,
-        user: state.User.user
-    }
-}
-
-export default withRouter(connect(mapStateToProps)(Results))
+export default withRouter(Results)

@@ -5,11 +5,13 @@ import Code from './Components/Authentication/Code/Code.jsx';
 // import Login from './Components/Authentication/Login/Login';
 import Password from './Components/Authentication/Password/Password';
 import Signin from './Components/Authentication/Signin/Signin';
-import Confirm from './Components/Operator/Demand/Confirm/Confirm';
-import GINConfirm from './Components/Operator/Demand/GINConfirm/GINConfirm';
+import Confirmation from './Components/Operator/Demand/Confirmation/Confirmation';
 import Home from './Components/Patient/Home/Home';
 import RequestEstimate from './Components/Patient/RequestEstimate/RequestEstimate';
 import Results from './Components/Patient/Results/Results';
+import DemandResults from './Components/Operator/Result/DemandResults/DemandResults';
+import PrivateRoute from './Global/PrivateRoute/PrivateRoute';
+import AwaitConfirmation from './Components/Patient/AwaitConfirmation/AwaitConfirmation';
 
 class App extends Component {
   render(){
@@ -33,21 +35,16 @@ class App extends Component {
                 }else return <Redirect to='/' />
               }
             } />
-            <Route exact path='/patientHome' component={Home} />
-            <Route exact path='/adminHome' component={Home} />
-              {/* ()=>{
-                //get user role from the token  and redirect to the right page.
-                //do an if to verify if the localStorage has the user.
-                //the switch
-                let user='patient'
-                switch(user){
-                  default:
-                    return <Home />
-                }
-              }
-            } /> */}
+            {/* <PrivateRoute exact path='/home'
+              render={renderProps=>(
+                <Home dispatch={this.props.dispatch} {...renderProps} />
+              )}
+            /> */}
+            <Route exact path='/home'><Home dispatch={this.props.dispatch} /></Route>
             <Route exact path='/result'><Results dispatch={this.props.dispatch} /></Route>
-            <Route exact path='/confirmDemands'><GINConfirm dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/confirmDemands'><Confirmation dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/uploadResults'><DemandResults dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/awaitconfirmation'><AwaitConfirmation dispatch={this.props.dispatch} /></Route>
             <Redirect to='/' />
         </Switch>
       </Router>

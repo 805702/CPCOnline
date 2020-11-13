@@ -85,13 +85,16 @@ class CodeForm extends Component {
                 }
                 else{
                   localStorage.setItem("userToken",result.token)
-                  //redirect to the right home page
-                  if(result.role==='patient' || result.role==='visitor') {
-                    this.props.history.push('/patientHome')
+                  const {roleUser} = result.theUser
+                  let validRoles =['visitor', 'patient']
+                  if(validRoles.includes(roleUser)) {
+                    this.props.dispatch({type:'LOAD_USER', payload:result.theUser})
+                    this.props.dispatch({type:'LOAD_IS_AUTHENTICATED', payload:true})
+                    this.props.history.push('/home')
                   }
-                //   else {
-                //     this.props.history.push('/')
-                //   }
+                  else {
+                    this.props.history.push('/')
+                  }
                 }
                 setSubmitting(false);
               })

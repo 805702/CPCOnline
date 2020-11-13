@@ -1,10 +1,10 @@
 const initState = {
     patient:{
-        phoneUser:657140183,
-        firstNameUser: 'Tchakoumi Kouatchoua',
-        dateOfBirthUser: '1999-03-27',
-        genderUser:'m',
-        lastNameUser:'Lorrain',
+        phoneUser:1,
+        firstNameUser: '',
+        dateOfBirthUser: '',
+        genderUser:'',
+        lastNameUser:'',
     }
 }
 

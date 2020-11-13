@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';import { ToastContainer, toast } from 'react-toastify';
+import * as Yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
 import { withRouter } from 'react-router-dom';
 import BarLoader from 'react-bar-loader';
 import 'react-toastify/dist/ReactToastify.css';
@@ -56,15 +57,12 @@ class PasswordForm extends Component {
                     }
                     else{
                       localStorage.setItem("userToken",result.token)
-                      //redirect to the right home page
-                      if(result.role==='admin') {
-                        this.props.history.push('/adminHome')
-                      }else if(result.role==='operator'){
-                        this.props.history.push('/operatorHome')
-                      }else if(result.role==='commFi'){
-                        this.props.history.push('/commFiHome')
-                      }else if(result.role==='partner'){
-                        this.props.history.push('/partnerHome')
+                      const {roleUser} = result.theUser
+                      let validRoles =['admin', 'operator', 'partner', 'commfi']
+                      if(validRoles.includes(roleUser)) {
+                        this.props.dispatch({type:'LOAD_USER', payload:result.theUser})
+                        this.props.dispatch({type:'LOAD_IS_AUTHENTICATED', payload:true})
+                        this.props.history.push('/home')
                       }
                       else {
                         this.props.history.push('/')

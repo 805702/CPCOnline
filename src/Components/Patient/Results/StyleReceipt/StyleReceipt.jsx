@@ -1,20 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-function downloadResults (ref, GIN) {
-    fetch(`${ref}`)
-        .then(response => {
-            response.blob().then(blob => {
-                let url = window.URL.createObjectURL(blob);
-                let a = document.createElement('a');
-                a.href = url;
-                a.download = `Results_Demand_${GIN}`;
-                a.click();
-            });
-            //window.location.href = response.url;
-    });
-}
-
 function requestResult (GIN) {
     alert(`Results requested for ${GIN}`)
 }
@@ -62,38 +48,72 @@ function StyleReceipt(props){
                     let dueDate = examResult.dueDate.split('T')
                     dueDate[1]= dueDate[1].split('.0')[0]
                     dueDate =dueDate.join(' ')
-                    return(
-                        <div className="demand-GIN" key={anExam.idMedExamDemandExamination}>
-                            <div className="demand-GIN-indicator"></div>
-                            <div className="demand-GIN-data">
-                                <span className="demand-GIN-data-group">
-                                    <i className="demand-GIN-data-label">Name examination:</i>
-                                    <i className="demand-GIN-data-value">{anExam.nameExamination}</i>
-                                </span>
-                                <span className="demand-GIN-data-group">
-                                    <i className="demand-GIN-data-label">Exam price:</i>
-                                    <i className="demand-GIN-data-value">{anExam.bValue * 105} CFA</i>
-                                </span>
-                                {(new Date())>(new Date(examResult.dueDate))?(
-                                    examResult.dateUploaded===null?(
-                                        <span className="demand-GIN-data-group btn-own">
-                                            <i className="demand-GIN-data-value req-rslt-btn" onClick={()=>{requestResult(anExam.GIN)}}>Request results</i>
-                                        </span>
-                                    ):(
-                                        <span className="demand-GIN-data-group btn-own">
-                                            <i className="demand-GIN-data-value dwnld-btn" onClick={()=>{downloadResults(examResult.resultRef, anExam.GIN)}}>Get results</i>
-                                        </span>
-                                    )
-                                )
-                                :
-                                <span className="demand-GIN-data-group">
-                                    <i className="demand-GIN-data-label">Due Date:</i>
-                                    <i className="demand-GIN-data-value">{dueDate}</i>
-                                </span>
-                                }
-                            </div>
+                    return (
+                      <div
+                        className="demand-GIN"
+                        key={anExam.idMedExamDemandExamination}
+                      >
+                        <div className="demand-GIN-indicator"></div>
+                        <div className="demand-GIN-data">
+                          <span className="demand-GIN-data-group">
+                            <i className="demand-GIN-data-label">
+                              Name examination:
+                            </i>
+                            <i className="demand-GIN-data-value">
+                              {anExam.nameExamination}
+                            </i>
+                          </span>
+                          <span className="demand-GIN-data-group">
+                            <i className="demand-GIN-data-label">Exam price:</i>
+                            <i className="demand-GIN-data-value">
+                              {anExam.bValue * 105} CFA
+                            </i>
+                          </span>
+                          {new Date() > new Date(examResult.dueDate) ? (
+                            examResult.resultRef === null ? (
+                              props.callingComponent==='result'?<span className="demand-GIN-data-group btn-own">
+                                <i
+                                  className="demand-GIN-data-value req-rslt-btn"
+                                  onClick={() => {
+                                    requestResult(anExam.GIN);
+                                  }}
+                                >
+                                  Request results
+                                </i>
+                              </span>:
+                              <span className="demand-GIN-data-group">
+                              <i className="demand-GIN-data-label">Pending</i>
+                              <i className="demand-GIN-data-value">Confirmation</i>
+                            </span>
+                            ) : (
+                              props.callingComponent==='result'?<span className="demand-GIN-data-group btn-own">
+                                <a
+                                  className="demand-GIN-data-value dwnld-btn"
+                                  download={`Results_Demand_${anExam.GIN}`}
+                                  href={`http://localhost:4000/static/${examResult.resultRef}`}
+                                  target="_blank"
+                                  >
+                                  Get results
+                                </a>
+                              </span>:
+                              <span className="demand-GIN-data-group">
+                              <i className="demand-GIN-data-label">Pending</i>
+                              <i className="demand-GIN-data-value">Confirmation</i>
+                            </span>
+                            )
+                          ) : (
+                            props.callingComponent==='result'?<span className="demand-GIN-data-group">
+                              <i className="demand-GIN-data-label">Due Date:</i>
+                              <i className="demand-GIN-data-value">{dueDate}</i>
+                            </span>:
+                            <span className="demand-GIN-data-group">
+                              <i className="demand-GIN-data-label">Pending</i>
+                              <i className="demand-GIN-data-value">Confirmation</i>
+                            </span>
+                          )}
                         </div>
-                    )
+                      </div>
+                    );
                 })}
             </div>
 
@@ -117,7 +137,7 @@ const mapStateToProps = state =>{
     return{
         demandHasExamJoin: state.DemandHasExamJoin.demandHasExamJoin,
         medExamResult: state.MedExamResult.medExamResult,
-        user: state.User.user
+        user: state.User.user,
     }
 }
 

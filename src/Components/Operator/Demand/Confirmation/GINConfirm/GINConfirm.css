@@ -1,17 +1,26 @@
 .GINConfirm-holder,
+.demand-results-holder .demand-result-line-td,
 .GINConfirm-holder .GINConfirm-identification {
     display: grid;
     margin: 10px 0;
 }
 
 .GINConfirm-holder .GINConfirm-page-hdr {
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+}
+
+.GINConfirm-holder .GINConfirm-page-hdr {
     display: grid;
-    grid-template-columns: 20px 1fr;
+    grid-template-columns: 30px 1fr;
+    align-content: center;
 }
 
 .GINConfirm-holder .GINConfirm-page-hdr .GINConfirm-req-number {
     justify-self: center;
     font-style: normal;
+    align-self: center;
 }
 
 .GINConfirm-holder .GINConfirm-identification i {
@@ -52,7 +61,7 @@
     display: grid;
 }
 
-.GINConfirm-exams-confirm .no-margin-form button {
+.GINConfirm-exams-confirm .no-margin-form .upload-GIN-btn {
     justify-self: end;
     height: 2rem;
     margin-top: 5px;
@@ -64,4 +73,19 @@
 
 .GINConfirm-exams-confirm .GINConfirm-form {
     width: 100%;
+}
+
+.GINConfirm-req-number .iden-info-label {
+    font-style: normal;
+    font-weight: bolder;
+}
+
+.GINConfirm-page-hdr .fa-arrow-left {
+    text-align: center;
+    color: black;
+    background-color: white;
+    border-radius: 100%;
+    margin-left: 5px;
+    padding: 5px;
+    align-self: center;
 }

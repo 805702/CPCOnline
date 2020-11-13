@@ -1,9 +1,5 @@
 const initState = {
-    requestExams:[
-        {nameExamination:'Crachat'},
-        {nameExamination:'Fufu'},
-        {nameExamination:'Kazal'},
-    ]
+    requestExams:[]
 }
 
 const requestExamsReducer = (state=initState, action) =>{

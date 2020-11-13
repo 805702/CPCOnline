@@ -131,10 +131,10 @@ class TextDemand extends Component {
                 {this.displaySelectedExamList()}
 
             </div>
-            <div className="txt-entry-mthd-btns">
+            {this.props.isAuthenticated?<div className="txt-entry-mthd-btns">
                 <button type='button' className='btn-cancel' onClick={()=>window.location.assign('/home')}>Cancel</button>
                 <button type='submit' className='btn-nxt' onClick={this.onNext}>Next</button>
-            </div>
+            </div>:null}
         </React.Fragment>
         )
     }
@@ -142,7 +142,9 @@ class TextDemand extends Component {
 
 const mapStateToProps = state =>{
     return{
-        examination: state.Examination.examinations
+        examination: state.Examination.examinations,
+        isAuthenticated: state.IsAuthenticated.isAuthenticated,
+        user: state.User.user
     }
 }
 

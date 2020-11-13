@@ -8,16 +8,17 @@ import parseJwt from '../../../../utils/parseJwt';
 import { Link } from 'react-router-dom';
 
 function Identification(props) {
+  let wanted=['visitor', 'partner']
   console.log(props.token)
     return (
       <Formik
         initialValues={{
-          phone: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.phoneUser:props.identification.phone,
-          fname: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.firstNameUser:props.identification.fname,
-          lname: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.lastNameUser:props.identification.lname,
-          dob: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.dateOfBirthUser:props.identification.dob,
-          gender: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.genderUser.toUpperCase():props.identification.gender,
-          email: props.user.roleUser!=='visitor' && props.user.roleUser !==""?props.user.emailUser:props.identification.email,
+          phone: props.user.roleUser!=='visitor' && props.isAuthenticated?props.user.phoneUser:props.identification.phone,
+          fname: props.user.roleUser!=='visitor' && props.isAuthenticated?(props.user.roleUser==='partner'?'':props.user.firstNameUser):props.identification.fname,
+          lname: props.user.roleUser!=='visitor' && props.isAuthenticated?(props.user.roleUser==='partner'?'':props.user.lastNameUser):props.identification.lname,
+          dob: props.user.roleUser!=='visitor' && props.isAuthenticated?(props.user.roleUser==='partner'?'':props.user.dateOfBirthUser):props.identification.dob,
+          gender: props.user.roleUser!=='visitor' && props.isAuthenticated?(props.user.roleUser==='partner'?'':props.user.genderUser.toUpperCase()):props.identification.gender,
+          email: props.user.roleUser!=='visitor' && props.isAuthenticated?(props.user.roleUser==='partner'?'':props.user.emailUser):props.identification.email,
           EndDate:Date.now()
         }}
         validationSchema={Yup.object({
@@ -53,7 +54,7 @@ function Identification(props) {
                   <i className="error">{errors.phone}</i>
                 ) : null}
               </span>
-              <Field name="phone" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <Field name="phone" type="text" disabled={props.user.roleUser!=='visitor' && props.isAuthenticated} />
               <i className="ex-message">
                 <i>Example: </i>
                 <b>657140183 (cameroonian number)</b>
@@ -65,7 +66,7 @@ function Identification(props) {
                   <i className="error">{errors.fname}</i>
                 ) : null}
               </span>
-              <Field name="fname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <Field name="fname" type="text" disabled={!wanted.includes(props.user.roleUser) && props.isAuthenticated} />
 
               <span className="guidan">
                 <label htmlFor="lname">Last name</label>
@@ -73,7 +74,7 @@ function Identification(props) {
                   <i className="error">{errors.lname}</i>
                 ) : null}
               </span>
-              <Field name="lname" type="text" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <Field name="lname" type="text" disabled={!wanted.includes(props.user.roleUser) && props.isAuthenticated} />
 
               <span className="guidan">
                 <label htmlFor="dob">Date of birth</label>
@@ -81,7 +82,7 @@ function Identification(props) {
                   <i className="error">{errors.dob}</i>
                 ) : null}
               </span>
-              <Field name="dob" type="date" className="date-input" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <Field name="dob" type="date" className="date-input" disabled={!wanted.includes(props.user.roleUser) && props.isAuthenticated} />
               <i className="ex-message">
                 <i>Format: </i>
                 <b>JJ - MM - YYYY</b>
@@ -93,7 +94,7 @@ function Identification(props) {
                   <i className="error">{errors.email}</i>
                 ) : null}
               </span>
-              <Field name="email" type="email" disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""} />
+              <Field name="email" type="email" disabled={!wanted.includes(props.user.roleUser) && props.isAuthenticated} />
               <i className="ex-message">
                 <i>Example: </i>
                 <b>test@test.com</b>
@@ -115,7 +116,7 @@ function Identification(props) {
                     id="M"
                     checked={values.gender === "M"}
                     onChange={() => setFieldValue("gender", "M")}
-                    disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
+                    disabled={!wanted.includes(props.user.roleUser) && props.isAuthenticated}
                   />
                 </div>
                 <div className="radio-group">
@@ -127,7 +128,7 @@ function Identification(props) {
                     id="F"
                     checked={values.gender === "F"}
                     onChange={() => setFieldValue("gender", "F")}
-                    disabled={props.user.roleUser!=='visitor' && props.user.roleUser !==""}
+                    disabled={!wanted.includes(props.user.roleUser) && props.isAuthenticated}
                   />
                 </div>
               </div>
@@ -147,7 +148,8 @@ function Identification(props) {
 
 const mapStateToProps=state=>{
   return{
-    user:state.User.user
+    user:state.User.user,
+    isAuthenticated: state.IsAuthenticated.isAuthenticated
   }
 }
 

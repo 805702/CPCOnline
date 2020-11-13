@@ -1,0 +1,34 @@
+.demand-line-th,
+.demand-result-line-th {
+    background-color: black;
+    color: white;
+}
+
+.demand-line-th,
+.demand-result-line-th,
+.demand-line,
+.demand-results-holder .demand-result-line-td .demand-result-data-line {
+    display: grid;
+    grid-template-columns: 50px 1fr 230px;
+    min-height: 2.5rem;
+    align-content: center;
+    cursor: pointer;
+}
+
+.demand-line,
+.demand-results-holder .demand-result-line-td {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 7px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px 0;
+    border-radius: 1rem;
+}
+
+.demand-line:hover,
+.demand-results-holder .demand-result-line-td:hover {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 10px 0 rgba(38, 150, 224, 0.19);
+}
+
+.demand-line-no,
+.demand-results-holder .demand-result-line-td .demand-result-data-line .demand-result-line-data:first-of-type,
+.demand-results-holder .demand-result-line-th .demand-result-line-data:first-of-type {
+    justify-self: center;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
-import ComponentMould from '../../../../Global/ComponentMould/ComponentMould';
+import ComponentMould from '../../../../../Global/ComponentMould/ComponentMould';
 
 import DemandLine from '../DemandLine/DemandLine';
 import './Confirm.css'
@@ -15,8 +15,7 @@ function Confirm(props) {
         demandDate[1]= demandDate[1].split('.0')[0]
         demandDate =demandDate.join(' at ')
 
-        let demandSIN = 'SYS - ' + aDemand.SIN.slice(0,4) + ' - ' + aDemand.SIN.slice(4,8)
-        return <DemandLine key={aDemand.SIN} No={index+1} SIN={demandSIN} date={demandDate} td={true} />
+        return <DemandLine key={aDemand.SIN} No={index+1} onClick={props.onNext} SIN={aDemand.SIN} date={demandDate} td={true} />
     })
     return (
         <ComponentMould>

@@ -1,16 +1,14 @@
 const initState = {
-    medicalExamDemand:[
-        {SIN:'12453658', dateCreated:'2020-11-01T10:02:46.0000Z'},
-        {SIN:'12453858', dateCreated:'2020-11-01T11:02:46.0000Z'},
-        {SIN:'12459858', dateCreated:'2020-10-31T10:02:46.0000Z'},
-        {SIN:'12456858', dateCreated:'2020-10-01T10:02:50.0000Z'},
-    ]
+    medicalExamDemand:[]
 }
 
 const medicalExamDemandReducer = (state=initState, action) =>{
     switch(action.type){
         case 'LOAD_MEDICAL_EXAM_DEMAND':
             return { ...state, medicalExamDemand: action.payload }
+        case 'REMOVE_MEDICAL_EXAM_DEMAND':
+            let demands = state.medicalExamDemand.filter(demand=>demand.SIN!==action.payload)
+            return {...state, medicalExamDemand:demands}
         default:
             return state
     }

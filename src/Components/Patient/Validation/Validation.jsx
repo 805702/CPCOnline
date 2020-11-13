@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function notifyIncompatiblePhoneService(){return toast.error('Phone number does not match paying service. verify and try again')}
 function notifyNoExam(){return toast.error('Must select at least an exam')}
+function notifyError(messate){return toast.error(messate)}
 // function notifyDemandSuccess(){return toast.error('Must select at least an exam')}
 // function notifyDemandFailure(){return toast.error('Must select at least an exam')}
 
@@ -116,11 +117,13 @@ function Validation(props){
                   let data={SIN:`SYS - ${result.SIN.slice(0,4)} - ${result.SIN.slice(4,8)}`, status:true}
                   props.onNext('next', data)
                 }else{
-                  props.onNext('next', {status:false})
+                  notifyError(result.err.toString())
+                  // props.onNext('next', {status:false})
                 }
                 setSubmitting(false);
               }).catch(err=>{
-                props.onNext('next', {status:false})
+                // props.onNext('next', {status:false})
+                notifyError(err.toString())
                 setSubmitting(false);
               })
               //this is where you do a backend 

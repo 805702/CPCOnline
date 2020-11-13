@@ -1,0 +1,65 @@
+.demand-result-line-td {
+    display: grid;
+}
+
+.upload-block .no-margin-form,
+.upload-block .no-margin-form .upload-file-tag {
+    margin: 0;
+    grid-column-gap: 5px;
+}
+
+#upload-result-input {
+    visibility: hidden;
+}
+
+.upload-block .no-margin-form .upload-file-tag .upload-label {
+    padding: 5px;
+    width: fit-content;
+    border-radius: 5px;
+    color: white;
+}
+
+.upload-block .no-margin-form .upload-file-tag .with-file {
+    background-color: rgba(221, 170, 170, 0.301);
+}
+
+.upload-block .no-margin-form .upload-file-tag .no-file {
+    background-color: #95b395;
+}
+
+.upload-block .no-margin-form .upload-file-tag .no-file:hover {
+    background-color: #0D9D0A;
+}
+
+.upload-block .no-margin-form .upload-file-tag .upload-text {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.demand-result-line-td .demand-result-btns .upload-block {
+    margin-top: 5px;
+    padding: 3px;
+    display: grid;
+    justify-content: start;
+    width: fit-content;
+    border: 1px solid black;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+}
+
+.demand-result-line-td .demand-result-btns .upload-block .upload-block-header {
+    justify-self: center;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+.demand-results-holder .demand-result-line-td .demand-result-btns .upload-block .no-margin-form button[type='submit'] {
+    margin: none;
+    margin-top: 10px;
+    margin-left: 10px;
+}
