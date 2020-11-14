@@ -40,6 +40,7 @@ class TextDemand extends Component {
                 let ansHolder = selectedExams.find(exam=>exam.idExamination===anExam.idExamination)
                 return ansHolder===undefined?true:false
             })
+            console.log(exams)
             this.setState({options:exams, selectedExams})
         })
         .catch(err=>{

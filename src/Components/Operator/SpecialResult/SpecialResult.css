@@ -1,0 +1,35 @@
+.pdf-iframe {
+    border: none;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+    height: 50vh;
+    margin-bottom: 10px;
+}
+
+.special-req-holder {
+    display: grid;
+}
+
+.special-req-holder .no-margin-form .upload-results-sumbit {
+    background-color: green;
+    width: fit-content;
+    border: none;
+    color: white;
+    font-size: large;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 3px 10px;
+    justify-self: end;
+}
+
+.upload-block .upload-block-header {
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+
+.pdf-iframe::-webkit-scrollbar-thumb {
+    color: red;
+}

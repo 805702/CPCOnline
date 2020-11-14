@@ -37,7 +37,6 @@ class Results extends Component {
                 method:'post'
             }).then(data=>data.json())
             .then(result=>{
-                console.log(result)
                 this.props.dispatch({type:'LOAD_DEMAND_HAS_EXAM_JOIN', payload:result.demandHasExamJoin})
                 this.props.dispatch({type:'LOAD_MED_EXAM_RESULT', payload:result.medExamResult})
                 this.props.dispatch({type:'LOAD_USER', payload:result.user.user})
@@ -55,7 +54,7 @@ class Results extends Component {
     }
 
     handleBackBtn=()=>{
-        this.setState({GIN:''})
+        this.setState({GIN:'', searchValue:''})
     }
 
     render() {

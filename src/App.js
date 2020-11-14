@@ -12,6 +12,8 @@ import Results from './Components/Patient/Results/Results';
 import DemandResults from './Components/Operator/Result/DemandResults/DemandResults';
 import PrivateRoute from './Global/PrivateRoute/PrivateRoute';
 import AwaitConfirmation from './Components/Patient/AwaitConfirmation/AwaitConfirmation';
+import SpecialResult from './Components/Operator/SpecialResult/SpecialResult';
+import Complete from './Components/Operator/Demand/Complete/Complete';
 
 class App extends Component {
   render(){
@@ -45,6 +47,8 @@ class App extends Component {
             <Route exact path='/confirmDemands'><Confirmation dispatch={this.props.dispatch} /></Route>
             <Route exact path='/uploadResults'><DemandResults dispatch={this.props.dispatch} /></Route>
             <Route exact path='/awaitconfirmation'><AwaitConfirmation dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/specialResult'><SpecialResult dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/completeDemand'><Complete dispatch={this.props.dispatch} /></Route>
             <Redirect to='/' />
         </Switch>
       </Router>

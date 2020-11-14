@@ -15,7 +15,7 @@ let groupMedExamDemandByGIN=(demandHasExamJoin, searchValue)=>{
     if(searchValue===''){
         demandHasExamJoin.map(ademandHasExam=>{
             let test = groupArray.filter(_=>_.GIN===ademandHasExam.GIN)
-            if(test.length===0)groupArray.push({GIN:ademandHasExam.GIN, dateDemanded:ademandHasExam.dateCreated})
+            if(test.length===0)groupArray.push({GIN:ademandHasExam.GIN, dateDemanded:ademandHasExam.dateCreated, resultRef:ademandHasExam.resultRef})
             return null
         })
     }
@@ -24,7 +24,7 @@ let groupMedExamDemandByGIN=(demandHasExamJoin, searchValue)=>{
         if (test.length!==0) {
             test.map(_=>{
                 let __ = groupArray.find(___=>___.GIN===_.GIN)
-                if (__ === undefined) groupArray.push({GIN:_.GIN, dateDemanded:_.dateCreated})
+                if (__ === undefined) groupArray.push({GIN:_.GIN, dateDemanded:_.dateCreated, resultRef:_.resultRef})
                 return null
             })
         //     // groupArray.push({GIN:test.GIN, dateDemanded:test.dateCreated})
@@ -55,6 +55,21 @@ function StyleDemands(props){
                                     <i className="demand-GIN-data-label">Demand  date:</i>
                                     <i className="demand-GIN-data-value">{dateDemanded}</i>
                                 </span>
+                                {aDemand.resultRef!==null?
+                                <span className="demand-GIN-data-group btn-own">
+                                    <a
+                                    className="demand-GIN-data-value dwnld-btn"
+                                    download={`Results_Demand_${aDemand.GIN}`}
+                                    href={`http://localhost:4000/static/${aDemand.resultRef}`}
+                                    target="_blank"
+                                    >
+                                    Get results
+                                    </a>
+                                </span>:
+                                <span className="demand-GIN-data-group">
+                                    <i className="demand-GIN-data-label">Waiting</i>
+                                    <i className="demand-GIN-data-value">Results</i>
+                                </span>}
                             </div>
                         </div>
                     )

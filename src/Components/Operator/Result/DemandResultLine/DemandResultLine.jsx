@@ -38,138 +38,137 @@ class DemandResultLine extends Component {
             postpone: '',
             now: Date.now()
           }}
-      validationSchema={Yup.object({
-        postpone: Yup.date().min(Yup.ref('now'),'Must be after today')
-      })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          let theDate = this.props.fDate.split("T");
-          theDate[1] = theDate[1].split(".0")[0];
-          theDate = theDate.join(" ");
+          validationSchema={Yup.object({
+            postpone: Yup.date().min(Yup.ref('now'),'Must be after today')
+          })}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              let theDate = this.props.fDate.split("T");
+              theDate[1] = theDate[1].split(".0")[0];
+              theDate = theDate.join(" ");
 
-          const theToken = localStorage.getItem("userToken");
-          const userId = parseJwt(theToken).idUser;
+              const theToken = localStorage.getItem("userToken");
+              const userId = parseJwt(theToken).idUser;
 
-          let wanted = ['operator','admin']
-          const {roleUser} = this.props.user
-          if (this.props.isAuthenticated && wanted.includes(roleUser)) {
-            if(this.state.choosenAction==='upload' && values.upload !== null && values.upload!==undefined){
-              let formData = new FormData();
-              formData.append(`uploadFile`, values.upload);
-              formData.append('GIN', this.props.GIN)
-              formData.append('idUser', userId)
-              formData.append('dueDate', theDate)
+              let wanted = ['operator','admin']
+              const {roleUser} = this.props.user
+              if (this.props.isAuthenticated && wanted.includes(roleUser)) {
+                if(this.state.choosenAction==='upload' && values.upload !== null && values.upload!==undefined){
+                  let formData = new FormData();
+                  formData.append(`uploadFile`, values.upload);
+                  formData.append('GIN', this.props.GIN)
+                  formData.append('idUser', userId)
+                  formData.append('dueDate', theDate)
 
-              fetch('http://localhost:4000/api/result/uploadDemandResult',{
-                method:'post',
-                body:formData
-              }).then(data=>data.json())
-              .then(result=>{
-                if(result.err){
-                  if ( result.err.toString() === "TypeError: Failed to fetch" ) { 
-                    NotifyOperationFailed( "Verify that your internet connection is active" );
-                  }
-                  else NotifyOperationFailed(result.err.toString())
-                }
-                else {
-                  NotifyOperationSuccess('Result uploaded Successfully')
-                  this.props.dispatch({type:'REMOVE_DEMAND_RESULT', payload:this.props.GIN})
-                }
-                setSubmitting(false);
-              })
-              .catch(err=>{
-                if ( err.toString() === "TypeError: Failed to fetch" ) { 
-                  NotifyOperationFailed( "Verify that your internet connection is active" );
-                }
-                else {
-                  NotifyOperationFailed(err.toString())
-                  console.log(err)
-                }
-                setSubmitting(false);
-              })
-            }else  if(this.state.choosenAction==='postpone' && values.postpone!==''){
-              fetch('http://localhost:4000/api/result/postponeResult',{
-                method:'post',
-                headers:{'Content-Type':'application/json'},
-                body: JSON.stringify({
-                  postpone:values.postpone,
-                  GIN: this.props.GIN,
-                  idUser:userId,
-                  dueDate:theDate
-                })
-              }).then(data=>data.json())
-              .then(result=>{
-                if(result.err){
-                  if ( result.err.toString() === "TypeError: Failed to fetch" ) { 
-                    NotifyOperationFailed( "Verify that your internet connection is active" );
-                  }
-                  else NotifyOperationFailed(result.err.toString())
-                  console.log('err', result)
-                }
-                else {
-                  NotifyOperationSuccess('Exam was postponed successfully')
-                  this.props.dispatch({type:'REMOVE_DEMAND_RESULT', payload:this.props.GIN})
-                }
-                setSubmitting(false);
-              })
-              .catch(err=>{
-                if ( err.toString() === "TypeError: Failed to fetch" ) { 
-                  NotifyOperationFailed( "Verify that your internet connection is active" );
-                }
-                else {
-                  NotifyOperationFailed(err.toString())
-                  console.log(err)
-                }
-                setSubmitting(false);
-              })
-            }else setSubmitting(false)
-          }else {
-            NotifyOperationFailed(`${roleUser.toUpperCase()} cannot do this action`)
-            setSubmitting(false)
-          }
-        }, 1);
-      }}
-    >
-      {({ errors, touched, values, setFieldValue, isSubmitting }) => (
-        <Form className="component-form no-margin-form">
-          {isSubmitting? <BarLoader color="#0D9D0A" height="5" /> : null}
-          {this.state.choosenAction === 'upload'? 
-          <React.Fragment>
-            <span className="guidan">
-              <label htmlFor="postpone">Upload File</label>
-              {touched.upload && errors.upload ? (
-                <i className="error">{errors.upload}</i>
-              ) : null}
-            </span>
-            <span className="upload-file-tag">
-              <label htmlFor="upload-result-input" className='upload-label no-file' >Choose file</label>
-              {values.upload!==null && values.upload!==undefined?<label className="upload-text" >{values.upload.name}</label> :null }
-            </span>
-            <input type='file'
-              name="upload"
-              accept="application/pdf"
-              id='upload-result-input'
-              hidden={true}
-              onChange={(e) => setFieldValue("upload", e.target.files[0])}
-            />
-          </React.Fragment>
-          :null}
-          {this.state.choosenAction ==='postpone'?
+                  fetch('http://localhost:4000/api/result/uploadDemandResult',{
+                    method:'post',
+                    body:formData
+                  }).then(data=>data.json())
+                  .then(result=>{
+                    if(result.err){
+                      if ( result.err.toString() === "TypeError: Failed to fetch" ) { 
+                        NotifyOperationFailed( "Verify that your internet connection is active" );
+                      }
+                      else NotifyOperationFailed(result.err.toString())
+                    }
+                    else {
+                      NotifyOperationSuccess('Result uploaded Successfully')
+                      this.props.dispatch({type:'REMOVE_DEMAND_RESULT', payload:this.props.GIN})
+                    }
+                    setSubmitting(false);
+                  })
+                  .catch(err=>{
+                    if ( err.toString() === "TypeError: Failed to fetch" ) { 
+                      NotifyOperationFailed( "Verify that your internet connection is active" );
+                    }
+                    else {
+                      NotifyOperationFailed(err.toString())
+                      console.log(err)
+                    }
+                    setSubmitting(false);
+                  })
+                }else  if(this.state.choosenAction==='postpone' && values.postpone!==''){
+                  fetch('http://localhost:4000/api/result/postponeResult',{
+                    method:'post',
+                    headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify({
+                      postpone:values.postpone,
+                      GIN: this.props.GIN,
+                      idUser:userId,
+                      dueDate:theDate
+                    })
+                  }).then(data=>data.json())
+                  .then(result=>{
+                    if(result.err){
+                      if ( result.err.toString() === "TypeError: Failed to fetch" ) { 
+                        NotifyOperationFailed( "Verify that your internet connection is active" );
+                      }
+                      else NotifyOperationFailed(result.err.toString())
+                      console.log('err', result)
+                    }
+                    else {
+                      NotifyOperationSuccess('Exam was postponed successfully')
+                      this.props.dispatch({type:'REMOVE_DEMAND_RESULT', payload:this.props.GIN})
+                    }
+                    setSubmitting(false);
+                  })
+                  .catch(err=>{
+                    if ( err.toString() === "TypeError: Failed to fetch" ) { 
+                      NotifyOperationFailed( "Verify that your internet connection is active" );
+                    }
+                    else {
+                      NotifyOperationFailed(err.toString())
+                      console.log(err)
+                    }
+                    setSubmitting(false);
+                  })
+                }else setSubmitting(false)
+              }else {
+                NotifyOperationFailed(`${roleUser.toUpperCase()} cannot do this action`)
+                setSubmitting(false)
+              }
+            }, 1);
+          }}
+        >
+        {({ errors, touched, values, setFieldValue, isSubmitting }) => (
+          <Form className="component-form no-margin-form">
+            {isSubmitting? <BarLoader color="#0D9D0A" height="5" /> : null}
+            {this.state.choosenAction === 'upload'? 
             <React.Fragment>
-              <span className="guidan" id="cancel-last-span">
-                <label htmlFor="postpone">New date</label>
-                {touched.postpone && errors.postpone ? (
-                  <i className="error">{errors.postpone}</i>
+              <span className="guidan">
+                <label htmlFor="postpone">Upload File</label>
+                {touched.upload && errors.upload ? (
+                  <i className="error">{errors.upload}</i>
                 ) : null}
               </span>
-              <Field name="postpone" type="date" value={values.postpone} />
-            </React.Fragment>:null}
-            <button type="submit" className='upload-results-sumbit' disabled={isSubmitting}>Submit</button>
-          <ToastContainer />
-        </Form>
-      )}
-    </Formik>
-
+              <span className="upload-file-tag">
+                <label htmlFor="upload-result-input" className='upload-label no-file' >Choose file</label>
+                {values.upload!==null && values.upload!==undefined?<label className="upload-text" >{values.upload.name}</label> :null }
+              </span>
+              <input type='file'
+                name="upload"
+                accept="application/pdf"
+                id='upload-result-input'
+                hidden={true}
+                onChange={(e) => setFieldValue("upload", e.target.files[0])}
+              />
+            </React.Fragment>
+            :null}
+            {this.state.choosenAction ==='postpone'?
+              <React.Fragment>
+                <span className="guidan" id="cancel-last-span">
+                  <label htmlFor="postpone">New date</label>
+                  {touched.postpone && errors.postpone ? (
+                    <i className="error">{errors.postpone}</i>
+                  ) : null}
+                </span>
+                <Field name="postpone" type="date" value={values.postpone} />
+              </React.Fragment>:null}
+              <button type="submit" className='upload-results-sumbit' disabled={isSubmitting}>Submit</button>
+            <ToastContainer />
+          </Form>
+        )}
+        </Formik>
       </div>:null
     )
   }

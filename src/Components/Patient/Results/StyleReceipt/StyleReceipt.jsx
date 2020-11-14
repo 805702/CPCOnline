@@ -7,6 +7,7 @@ function requestResult (GIN) {
 
 function StyleReceipt(props){
     let exams = props.demandHasExamJoin.filter(aDemand=>aDemand.GIN === props.GIN)
+    if(exams.length === 1 && exams[0].bValue===null) exams=[]
     let calculateTotal = ()=>{
         let total = 0;
         exams.map(anExam=>{
@@ -17,7 +18,8 @@ function StyleReceipt(props){
         return total*105
     }
 
-    let dateDemanded = exams[0].dateCreated.split('T')
+    let aDemand = props.demandHasExamJoin.find(aDemand=>aDemand.GIN===props.GIN)
+    let dateDemanded = aDemand.dateCreated.split('T')
     dateDemanded[1]= dateDemanded[1].split('.0')[0]
     dateDemanded =dateDemanded.join(' ')
     return(
