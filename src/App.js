@@ -14,6 +14,8 @@ import PrivateRoute from './Global/PrivateRoute/PrivateRoute';
 import AwaitConfirmation from './Components/Patient/AwaitConfirmation/AwaitConfirmation';
 import SpecialResult from './Components/Operator/SpecialResult/SpecialResult';
 import Complete from './Components/Operator/Demand/Complete/Complete';
+import CreateUser from './Components/Admin/CreateUser';
+import ManageUsers from './Components/Admin/ManageUsers/ManageUsers';
 
 class App extends Component {
   render(){
@@ -49,6 +51,8 @@ class App extends Component {
             <Route exact path='/awaitconfirmation'><AwaitConfirmation dispatch={this.props.dispatch} /></Route>
             <Route exact path='/specialResult'><SpecialResult dispatch={this.props.dispatch} /></Route>
             <Route exact path='/completeDemand'><Complete dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/createUser'><CreateUser dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/manageUsers'><ManageUsers dispatch={this.props.dispatch} /></Route>
             <Redirect to='/' />
         </Switch>
       </Router>

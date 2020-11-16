@@ -10,6 +10,7 @@ import medicalExamDemandReducer from './MedicalExamDemand';
 import medPReducer from './MedP';
 import notificationReducer from './Notification.reducer';
 import patientReducer from './Patient';
+import personnel from './Personnel';
 import requestExamsReducer from './RequestExams';
 import userReducer from './User';
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
     MedP:medPReducer,
     Notification: notificationReducer,
     Patient:patientReducer,
+    Personnel: personnel,
     RequestExams:requestExamsReducer,
     User:userReducer,
     

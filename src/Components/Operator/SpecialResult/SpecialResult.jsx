@@ -1,12 +1,11 @@
 import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import BarLoader from "react-bar-loader";
 import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
 import parseJwt from "../../../utils/parseJwt";
 import './SpecialResult.css'
-import { Document, Page } from "react-pdf";
 
 function NotifyOperationFailed(message) {
   return toast.error(message);
@@ -74,6 +73,7 @@ function SpecialResult(props){
                           }
                           else if(specialResult.err.toString()==='This GIN already Exist') NotifyOperationFailed('This GLIMS number already Exists')
                           else if (specialResult.err.toString() === "TypeError: Failed to fetch") NotifyOperationFailed( "Verify that your internet connection is active" );
+                          else NotifyOperationFailed(specialResult.err.toString())
                           setSubmitting(false)
                         })
                         .catch((err) => {
