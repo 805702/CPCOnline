@@ -263,7 +263,7 @@ class CreateUser extends Component {
                   </React.Fragment>:null}
       
                   <div className="idnt-btns">
-                    <button type="submit" className="btn-nxt">
+                    <button type="submit" className="btn-nxt" disabled={isSubmitting}>
                       Create
                     </button>
                   </div>

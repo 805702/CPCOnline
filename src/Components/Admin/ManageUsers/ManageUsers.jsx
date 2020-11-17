@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 class ManageUsers extends Component {
   state = {
     phoneActifUser:null,
-    confirmed:false,
+    confirmAction:'',
     activateConfirm:false
   };
 
@@ -70,8 +70,53 @@ class ManageUsers extends Component {
   }
 
   handleDeactivateBtn=(e)=>{
-    if(e.target.id==='no')this.setState({activateConfirm:false, confirmed:false})
-    else this.setState({activateConfirm:false, confirmed:true})
+    if(e.target.id==='no')this.setState({activateConfirm:false})
+    else this.setState({activateConfirm:false},()=>{
+        if(this.state.confirmAction==='reset'){
+            let user = this.props.personnel.find(_=>_.phoneUser===this.state.phoneActifUser)
+            let status = 'inactive'
+            if(user !== undefined  && user.statusUser === 'inactive') status='active'
+            fetch('http://localhost:4000/api/user/deleteUser',{
+                method:'post',
+                headers: {'Content-Type':'application/json'},
+                body:JSON.stringify({phone:this.state.phoneActifUser, status})
+            }).then(data=>data.json())
+            .then(result=>{
+                if(!result.err){
+                    this.NotifyOperationSuccess('User account was successfully deactivated')
+                    if(user !== undefined  && user.statusUser === 'inactive')
+                    this.props.dispatch({type:'ACTIVATE_USER', payload:this.state.phoneActifUser})
+                    else this.props.dispatch({type:'DEACTIVATE_USER', payload:this.state.phoneActifUser})
+                }else if ( result.err.toString() === "TypeError: Failed to fetch" )
+                    this.NotifyOperationFailed( "Verify that your internet connection is active" );
+                else this.NotifyOperationFailed(result.err.toString());
+            })
+            .catch((err) => {
+                if (err.toString() === "TypeError: Failed to fetch") {
+                    this.NotifyOperationFailed( "Verify that your internet connection is active" );
+                } else this.NotifyOperationFailed(err.toString());
+            });
+        }else{
+            const email = this.props.personnel.find(_=>_.phoneUser===this.state.phoneActifUser).emailUser
+            fetch('http://localhost:4000/api/user/resetPassword',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({ phone:this.state.phoneActifUser, email })
+            }).then(data=>data.json())
+            .then(result=>{
+                if(!result.err){
+                    this.NotifyOperationSuccess(`User password has been reset a mail has been sent to ${email} with the new password`)
+                }else if ( result.err.toString() === "TypeError: Failed to fetch" )
+                    this.NotifyOperationFailed( "Verify that your internet connection is active" );
+                else this.NotifyOperationFailed(result.err.toString());
+            })
+            .catch((err) => {
+                if (err.toString() === "TypeError: Failed to fetch") {
+                    this.NotifyOperationFailed( "Verify that your internet connection is active" );
+                } else this.NotifyOperationFailed(err.toString());
+            });
+        }
+    })
   }
 
   confirmDeactivateUser=()=>{
@@ -79,7 +124,7 @@ class ManageUsers extends Component {
     return(
         <div className="deactivate-confirm-block">
             <span className="deactivate-message">
-                { `Are you sure you want to deactivate User with phone ${this.state.phoneActifUser} `}
+                { `Are you sure you want to ${this.state.confirmAction==='reset'?'deactivate User': 'reset password for user'} with phone ${this.state.phoneActifUser} `}
             </span>
             <span className="deactivate-btns">
                 <button className='deactivate-no' id='no' onClick={this.handleDeactivateBtn}>NO</button>
@@ -89,60 +134,9 @@ class ManageUsers extends Component {
     )
   }
 
-  changeUserStatus(phone){
-    // if(this.state.confirmed){
-        let user = this.props.personnel.find(_=>_.phoneUser===phone)
-        let status = 'inactive'
-        if(user !== undefined  && user.statusUser === 'inactive') status='active'
-        fetch('http://localhost:4000/api/user/deleteUser',{
-            method:'post',
-            headers: {'Content-Type':'application/json'},
-            body:JSON.stringify({phone, status})
-        }).then(data=>data.json())
-        .then(result=>{
-            if(!result.err){
-                this.NotifyOperationSuccess('User account was successfully deactivated')
-                if(user !== undefined  && user.statusUser === 'inactive')
-                this.props.dispatch({type:'ACTIVATE_USER', payload:phone})
-                else this.props.dispatch({type:'DEACTIVATE_USER', payload:phone})
-                // this.setState({confirmed:false})
-            }else if ( result.err.toString() === "TypeError: Failed to fetch" )
-                this.NotifyOperationFailed( "Verify that your internet connection is active" );
-            else this.NotifyOperationFailed(result.err.toString());
-        })
-        .catch((err) => {
-            if (err.toString() === "TypeError: Failed to fetch") {
-                this.NotifyOperationFailed( "Verify that your internet connection is active" );
-            } else this.NotifyOperationFailed(err.toString());
-        });
-    // }
-  }
-
-  modifyUserPassword(phone){
-    const email = this.props.personnel.find(_=>_.phoneUser===phone).emailUser
-    fetch('http://localhost:4000/api/user/resetPassword',{
-        method:'post',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({ phone, email })
-    }).then(data=>data.json())
-    .then(result=>{
-        if(!result.err){
-            this.NotifyOperationSuccess(`User password has been reset a mail has been sent to ${email} with the new password`)
-        }else if ( result.err.toString() === "TypeError: Failed to fetch" )
-            this.NotifyOperationFailed( "Verify that your internet connection is active" );
-        else this.NotifyOperationFailed(result.err.toString());
-    })
-    .catch((err) => {
-        if (err.toString() === "TypeError: Failed to fetch") {
-            this.NotifyOperationFailed( "Verify that your internet connection is active" );
-        } else this.NotifyOperationFailed(err.toString());
-    });
-  }
-
   styleUsers = ()=>{
     let users = this.props.personnel.sort((a,b)=>a.statusUser<b.statusUser?(a.phoneUser<b.phoneUser?1:-1):(a.roleUser<b.roleUser?1:-1))
     return users.map(theUser=>{
-    // const theUser = this.props.personnel.find(user=>user.phoneUser===phoneUser)
     return(
         this.state.phoneActifUser!==theUser.phoneUser?(
             <div className="non-selected-userData" key={theUser.phoneUser} onClick={()=>this.handlePatientClick(theUser.phoneUser)}>
@@ -196,12 +190,12 @@ class ManageUsers extends Component {
                     <i className="slctd-user-data-name">User status: </i>
                     <i className="slctd-user-data-value">
                         {
-                            theUser.statusUser==='active'?<input type='checkbox' checked onClick={()=>this.changeUserStatus(theUser.phoneUser)} />
-                            :<input type='checkbox' checked={false} onClick={()=>this.changeUserStatus(theUser.phoneUser)}/>
+                            theUser.statusUser==='active'?<input type='checkbox' checked onClick={()=>this.setState({activateConfirm:true, confirmAction:'reset'})} />
+                            :<input type='checkbox' checked={false} onClick={()=>this.setState({activateConfirm:true, confirmAction:'reset'})}/>
                         }
                     </i>
                 </span>
-                <button onClick={()=>this.modifyUserPassword(theUser.phoneUser)}>Reset user password</button>
+                <button onClick={()=>this.setState({activateConfirm:true, confirmAction:'password'})}>Reset user password</button>
             </div>
         )
     )
@@ -216,7 +210,7 @@ class ManageUsers extends Component {
     return (token !== null && parseJwt(token).idUser !== undefined && this.props.isAuthenticated && this.props.user.roleUser==='admin')?
     (
         <div>
-            {/* {this.confirmDeactivateUser()} */}
+            {this.confirmDeactivateUser()}
             {console.log('Hello')}
             {this.styleUsers()}
             <ToastContainer />

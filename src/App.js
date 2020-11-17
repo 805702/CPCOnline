@@ -16,6 +16,9 @@ import SpecialResult from './Components/Operator/SpecialResult/SpecialResult';
 import Complete from './Components/Operator/Demand/Complete/Complete';
 import CreateUser from './Components/Admin/CreateUser';
 import ManageUsers from './Components/Admin/ManageUsers/ManageUsers';
+import CreateExamCategory from './Components/Admin/CreateExamCategory/CreateExamCategory';
+import CreateExam from './Components/Admin/CreateExam/CreateExam';
+import ManageExams from './Components/Admin/ManageExams/ManageExams';
 
 class App extends Component {
   render(){
@@ -53,6 +56,9 @@ class App extends Component {
             <Route exact path='/completeDemand'><Complete dispatch={this.props.dispatch} /></Route>
             <Route exact path='/createUser'><CreateUser dispatch={this.props.dispatch} /></Route>
             <Route exact path='/manageUsers'><ManageUsers dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/createExamCategory'><CreateExamCategory dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/createExam'><CreateExam dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/manageExams'><ManageExams dispatch={this.props.dispatch} /></Route>
             <Redirect to='/' />
         </Switch>
       </Router>

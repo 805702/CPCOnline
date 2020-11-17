@@ -4,6 +4,7 @@ import awaitConfirmation from './AwaitConfirmation';
 import demandHasExamJoinReducer from './DemandHasExamJoin';
 import demandResults from './DemandResults';
 import examReducer from './Exam.reducer';
+import examCategory from './ExamCategory';
 import isAuthenticatedReducer from './IsAuthenticated';
 import medExamResultReducer from './MedExamResult';
 import medicalExamDemandReducer from './MedicalExamDemand';
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     DemandHasExamJoin:demandHasExamJoinReducer,
     DemandResults:demandResults,
     Examination: examReducer,
+    ExamCategory: examCategory,
     IsAuthenticated: isAuthenticatedReducer,
     MedExamResult: medExamResultReducer,
     MedicalExamDemand: medicalExamDemandReducer,

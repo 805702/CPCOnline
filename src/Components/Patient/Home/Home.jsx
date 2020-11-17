@@ -63,6 +63,9 @@ class Home extends Component {
                 <HomeLink to='/demand' linkName='Request Exam' notif={false} />
                 <HomeLink to='/createUser' linkName='Create Users' notif={false} />
                 <HomeLink to='/manageUsers' linkName='Manage Users' notif={false} />
+                <HomeLink to='/createExamCategory' linkName='Exam Category' notif={false} />
+                <HomeLink to='/createExam' linkName='Create Exams' notif={false} />
+                <HomeLink to='/manageExams' linkName='Manage Exams' notif={false} />
               </React.Fragment>
           )
         }
