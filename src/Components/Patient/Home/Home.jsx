@@ -78,6 +78,7 @@ class Home extends Component {
           <HomeLink to='/uploadResults' linkName='Upload Results' notif={false} />
           <HomeLink to='/specialResult' linkName='Special Results' notif={false} />
           <HomeLink to='/confirmDemands' linkName='Confirm Requests' notif={false} />
+          <HomeLink to='/completeDemand' linkName='Complete Requests' notif={false} />
         </React.Fragment>
       )
     }
