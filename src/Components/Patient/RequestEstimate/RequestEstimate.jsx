@@ -196,7 +196,6 @@ class RequestEstimate extends Component {
                 {this.state.step==='med'?
                     <MedPersonnel
                         onNext={this.handleNextBtn}
-                        identification={this.state.identification}
                         images={this.state.binary_images}
                         entryMethod={this.state.entryMethod}
                         medPersonnel={this.state.medPersonnel}

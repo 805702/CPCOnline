@@ -13,6 +13,7 @@ import notificationReducer from './Notification.reducer';
 import patientReducer from './Patient';
 import personnel from './Personnel';
 import requestExamsReducer from './RequestExams';
+import toComplete from './ToComplete';
 import userReducer from './User';
 
 const rootReducer = combineReducers({
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
     Patient:patientReducer,
     Personnel: personnel,
     RequestExams:requestExamsReducer,
+    ToComplete: toComplete,
     User:userReducer,
     
 });

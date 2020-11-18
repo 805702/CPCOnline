@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./MedPersonnel.css";
+import { connect } from "react-redux";
 
 function notifyNoExam() {
   return toast.error("No images for your demand");
@@ -78,8 +79,14 @@ function MedPersonnel(props) {
                 type="button"
                 className="btn-nxt"
                 onClick={() => {
-                  setFieldValue('submiting', true)
-                  console.log(values.submiting)
+                  const identification = {
+                    dob:props.user.dateOfBirthUser,
+                    email:props.user.emailUser,
+                    fname: props.user.firstNameUser,
+                    lname: props.user.lastNameUser,
+                    gender: props.user.genderUser,
+                    phone: props.user.phoneUser
+                  }
                   if (props.images.length > 0) {
                     let formData = new FormData();
                     props.images.forEach((image) =>
@@ -95,7 +102,7 @@ function MedPersonnel(props) {
                     ];
                     const medPKeys = ["title", "name"];
                     idenKeys.forEach((_) =>
-                      formData.append(_, props.identification[_])
+                      formData.append(_, identification[_])
                     );
                     medPKeys.forEach((_) => formData.append(_, values[_]));
                     formData.append("entryMethod", props.entryMethod);
@@ -115,6 +122,7 @@ function MedPersonnel(props) {
                           };
                           props.onNext("next", data);
                         } else {
+                          notificationToast(result.err)
                           notificationToast(
                             "Could not submit your demand! please try again"
                           );
@@ -142,4 +150,10 @@ function MedPersonnel(props) {
   );
 }
 
-export default MedPersonnel;
+const mapStateToProps=state=>{
+  return{
+    user: state.User.user
+  }
+}
+
+export default connect(mapStateToProps)(MedPersonnel);

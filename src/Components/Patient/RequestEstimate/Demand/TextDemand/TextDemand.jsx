@@ -15,6 +15,7 @@ class TextDemand extends Component {
         options:[],
     }
     notifyNoExam =()=>toast.error('Cannot submit an empty list. You must select at least 1 exam')
+    NotifyOperationFailed =(message)=>toast.error(message)
 
     onNext=()=>{
         //upload selectedExams
@@ -23,6 +24,29 @@ class TextDemand extends Component {
     }
 
     componentDidMount=()=>{
+        let userToken = localStorage.getItem("userToken");
+        fetch("http://localhost:4000/api/auth/validateToken", {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: userToken }),
+        })
+        .then((data) => data.json())
+        .then((result) => {
+            if (!result.err) {
+                this.props.dispatch({ type: "LOAD_USER", payload: result.theUser, });
+                this.props.dispatch({ type: "LOAD_IS_AUTHENTICATED", payload: true, });
+            } else if(!result.theUser)this.NotifyOperationFailed('No user found with given credentials')
+            else if ( result.err.toString() === "TypeError: Failed to fetch" ) { 
+                this.NotifyOperationFailed( "Verify that your internet connection is active" ); 
+            } else if ( result.err.toString() === "Failed to authenticate token" ) this.NotifyOperationFailed("User not authenticated");
+            else this.NotifyOperationFailed(result.err.toString());
+        })
+        .catch((err) => {
+            if (err.toString() === "TypeError: Failed to fetch") {
+            this.NotifyOperationFailed( "Verify that your internet connection is active" );
+            } else if (err.toString() === "Failed to authenticate token") this.NotifyOperationFailed("User not authenticated");
+            else this.NotifyOperationFailed(err.toString());
+        });
 
         fetch("http://localhost:4000/api/exams/getExams",{
             method:"get",
@@ -40,12 +64,13 @@ class TextDemand extends Component {
                 let ansHolder = selectedExams.find(exam=>exam.idExamination===anExam.idExamination)
                 return ansHolder===undefined?true:false
             })
-            console.log(exams)
             this.setState({options:exams, selectedExams})
         })
-        .catch(err=>{
-            // console.log(err)
-        })
+        .catch((err) => {
+            if (err.toString() === "TypeError: Failed to fetch") 
+            this.NotifyOperationFailed( "Verify that your internet connection is active" );
+            else this.NotifyOperationFailed(err.toString());
+        });
 
     }
 
@@ -133,8 +158,8 @@ class TextDemand extends Component {
 
             </div>
             {this.props.isAuthenticated?<div className="txt-entry-mthd-btns">
-                <button type='button' className='btn-cancel' onClick={()=>window.location.assign('/home')}>Cancel</button>
-                <button type='submit' className='btn-nxt' onClick={this.onNext}>Next</button>
+                {this.props.complete?null:<button type='button' className='btn-cancel' onClick={()=>window.location.assign('/home')}>Cancel</button>}
+                <button type='submit' className='btn-nxt' onClick={this.onNext}>{this.props.complete?"Complete":"Next"}</button>
             </div>:null}
         </React.Fragment>
         )
