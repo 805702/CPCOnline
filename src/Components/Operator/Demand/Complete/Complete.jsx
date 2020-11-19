@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import BarLoader from "react-bar-loader";
 import { ToastContainer, toast } from "react-toastify";
 import parseJwt from '../../../../utils/parseJwt'
+import './Complete.css'
 import TextDemand from '../../../Patient/RequestEstimate/Demand/TextDemand/TextDemand'
+import Scrollbars from 'react-custom-scrollbars';
 
 class Complete extends Component {
     state={
@@ -31,7 +33,7 @@ class Complete extends Component {
             if (!result.err) {
                 this.props.dispatch({ type: "LOAD_USER", payload: result.theUser, });
                 this.props.dispatch({ type: "LOAD_IS_AUTHENTICATED", payload: true, });
-                if(this.props.user.roleUser==='operator')
+                if(this.props.user.roleUser==='admin')
                 fetch('http://localhost:4000/api/demand/getDemandsToComplete',{
                     method:'get',
                     headers:{'Content-Type':'application/json'}
@@ -71,6 +73,11 @@ class Complete extends Component {
         return("No demand selected")
     }
 
+    handleStateSIN=(SIN)=>{
+        if(this.state.SIN===SIN) this.setState({SIN:''})
+        else this.setState({SIN})
+    }
+
     styleToCompleteDemands=()=>{
         const singleSIN =[]
         this.props.toComplete.forEach(_=> {
@@ -78,9 +85,13 @@ class Complete extends Component {
             if(test === undefined)singleSIN.push({SIN:_.SIN, dateCreated:_.dateCreated})
         });
         return singleSIN.map(aDemand=>{
-            return <div className="a-to-complete-dmd" key={aDemand.SIN} onClick={()=>this.setState({SIN:aDemand.SIN})}>
+            return <div className={this.state.SIN!==aDemand.SIN?"a-to-complete-dmd":'a-to-complete-dmd open-dmd'} key={aDemand.SIN} onClick={()=>this.handleStateSIN(aDemand.SIN)}>
                 <i className="a-to-complete-dmd-data">{aDemand.SIN}</i>
-                <i className="a-to-complete-dmd-data">{new Date(aDemand.dateCreated).toUTCString().split(' G')[0]}</i>
+                {this.state.SIN!==aDemand.SIN?<i className="a-to-complete-dmd-data">{new Date(aDemand.dateCreated).toUTCString().split(' G')[0]}</i>:
+                <div className='a-to-cplt-active'>
+                    <i className="a-to-complete-dmd-data">{new Date(aDemand.dateCreated).toUTCString().split(' G')[0]}</i>
+                    <i className="fa fa-caret-right"></i>
+                </div>}
             </div>
         }
         )
@@ -130,11 +141,25 @@ class Complete extends Component {
 
     render() {
         const token = localStorage.getItem("userToken");
-        return (token !== null && parseJwt(token).idUser !== undefined && this.props.isAuthenticated && this.props.user.roleUser==='operator')?
+        return (token !== null && parseJwt(token).idUser !== undefined && this.props.isAuthenticated && this.props.user.roleUser==='admin')?
         (
-          <div>
-            {this.styleToCompleteDemands()}
-            {this.styleDemandImages()}
+          <React.Fragment>
+            <div className="top-holder">
+                <div className="result-body">
+                    <div className="a-to-complete-dmd-hdr" >
+                        <i className="a-to-complete-dmd-data">Demand SIN</i>
+                        <i className="a-to-complete-dmd-data"> Date Demanded </i>
+                    </div>
+                    <Scrollbars style={{height:'30vh'}} >
+                        {this.styleToCompleteDemands()}
+                    </Scrollbars>
+                </div>
+                <div className="cplt-dmd-imgs">
+                    <Scrollbars style={{height:'30vh'}} >
+                     {this.styleDemandImages()}
+                    </Scrollbars>
+                </div>
+            </div>
             {this.state.submitting ? <BarLoader color="#0D9D0A" height="5" /> : null}
             <TextDemand
               selectedExams={[]}
@@ -142,7 +167,7 @@ class Complete extends Component {
               complete={true}
             />
             <ToastContainer />
-          </div>
+          </React.Fragment>
         ):<span>Invalid User Sign in to get acces to this page.</span>
     }
 }

@@ -33,7 +33,7 @@
 .exm-dmd-tbl-total,
 .exm-dmd-tbl-row {
     display: grid;
-    grid-template-columns: 20px 1fr 75px;
+    grid-template-columns: 20px 1fr 120px;
 }
 
 .exm-dmd-tbl-hdr {
@@ -112,7 +112,7 @@
 }
 
 .exm-dmd-tbl-total {
-    grid-template-columns: 1fr 75px;
+    grid-template-columns: 1fr 120px;
     font-weight: 400;
     border-top: 1px solid black;
     right: 0;

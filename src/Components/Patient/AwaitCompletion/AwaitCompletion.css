@@ -1,0 +1,16 @@
+.result-body .a-to-complete-dmd-imgs {
+    border: 1px solid black;
+}
+
+.dmd-images {
+    display: grid;
+    grid-gap: 10px;
+    justify-items: center;
+    padding: 10px;
+}
+
+.dmd-images img {
+    position: relative;
+    width: 100%;
+    height: auto;
+}

@@ -19,6 +19,8 @@ import ManageUsers from './Components/Admin/ManageUsers/ManageUsers';
 import CreateExamCategory from './Components/Admin/CreateExamCategory/CreateExamCategory';
 import CreateExam from './Components/Admin/CreateExam/CreateExam';
 import ManageExams from './Components/Admin/ManageExams/ManageExams';
+import AwaitCompletion from './Components/Patient/AwaitCompletion/AwaitCompletion';
+import AwaitPayment from './Components/Patient/AwaitPayment/AwaitPayment';
 
 class App extends Component {
   render(){
@@ -52,6 +54,8 @@ class App extends Component {
             <Route exact path='/confirmDemands'><Confirmation dispatch={this.props.dispatch} /></Route>
             <Route exact path='/uploadResults'><DemandResults dispatch={this.props.dispatch} /></Route>
             <Route exact path='/awaitconfirmation'><AwaitConfirmation dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/awaitCompletion'><AwaitCompletion dispatch={this.props.dispatch} /></Route>
+            <Route exact path='/awaitPayment'><AwaitPayment dispatch={this.props.dispatch} /></Route>
             <Route exact path='/specialResult'><SpecialResult dispatch={this.props.dispatch} /></Route>
             <Route exact path='/completeDemand'><Complete dispatch={this.props.dispatch} /></Route>
             <Route exact path='/createUser'><CreateUser dispatch={this.props.dispatch} /></Route>

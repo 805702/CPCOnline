@@ -190,6 +190,7 @@ class RequestEstimate extends Component {
                         medPersonnel={this.state.medPersonnel}
                         entryMethod={this.state.entryMethod}
                         onNext={this.handleNextBtn}
+                        complete={false}
                     />
                     :null
                 }

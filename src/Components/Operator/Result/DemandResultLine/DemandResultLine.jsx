@@ -164,6 +164,13 @@ class DemandResultLine extends Component {
                 </span>
                 <Field name="postpone" type="date" value={values.postpone} />
               </React.Fragment>:null}
+              {values.upload!==null && values.upload!== undefined?
+                <iframe
+                  src={this.showURL(values.upload)}
+                  className='pdf-iframe dmd-upld'
+                />
+                :null
+              }
               <button type="submit" className='upload-results-sumbit' disabled={isSubmitting}>Submit</button>
             <ToastContainer />
           </Form>
@@ -171,6 +178,12 @@ class DemandResultLine extends Component {
         </Formik>
       </div>:null
     )
+  }
+
+  showURL(file){
+    let blot = new Blob([file],{type:'application/pdf'})
+    let ur = URL.createObjectURL(blot)
+    return ur
   }
 
   handleFileUpload(e, props) {

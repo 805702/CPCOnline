@@ -14,6 +14,7 @@ import patientReducer from './Patient';
 import personnel from './Personnel';
 import requestExamsReducer from './RequestExams';
 import toComplete from './ToComplete';
+import toPay from './ToPay';
 import userReducer from './User';
 
 const rootReducer = combineReducers({
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
     Personnel: personnel,
     RequestExams:requestExamsReducer,
     ToComplete: toComplete,
+    ToPay: toPay,
     User:userReducer,
     
 });

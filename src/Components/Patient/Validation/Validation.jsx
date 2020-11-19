@@ -15,9 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function notifyIncompatiblePhoneService(){return toast.error('Phone number does not match paying service. verify and try again')}
 function notifyNoExam(){return toast.error('Must select at least an exam')}
-function notifyError(messate){return toast.error(messate)}
-// function notifyDemandSuccess(){return toast.error('Must select at least an exam')}
-// function notifyDemandFailure(){return toast.error('Must select at least an exam')}
+function notifyError(message){return toast.error(message)}
 
 function guessPayingService(phone){
     if(/^((6[5-9])|(2[2-3]))[0-9]{7}$/i.test(phone)){
@@ -96,36 +94,40 @@ function Validation(props){
           onSubmit={(values, { setSubmitting }) => {
             if(validatePayingService(values.payingPhone, values.payingService)){
               if(values.choosenExam.length!==0){
-              let returnValues = {
-                choosenExam:values.choosenExam,
-                payingPhone:Number(values.payingPhone),
-                payingService:values.payingService,
-                identification:props.identification,
-                medPersonnel:props.medPersonnel,
-                entryMethod:props.entryMethod,
-                demandAmount: calcultateTotal(props.selectedExams, values.choosenExam)
-              }
-
-              fetch('http://localhost:4000/api/demand/textDemand',{
-                method:'post',
-                headers: {'Content-Type': 'application/json'},
-                body:JSON.stringify(returnValues)
-              })
-              .then(data=>data.json())
-              .then(result=>{
-                if(result.SIN){
-                  let data={SIN:`SYS - ${result.SIN.slice(0,4)} - ${result.SIN.slice(4,8)}`, status:true}
-                  props.onNext('next', data)
-                }else{
-                  notifyError(result.err.toString())
-                  // props.onNext('next', {status:false})
+                if(!this.props.complete){
+                let returnValues = {
+                  choosenExam:values.choosenExam,
+                  payingPhone:Number(values.payingPhone),
+                  payingService:values.payingService,
+                  identification:props.identification,
+                  medPersonnel:props.medPersonnel,
+                  entryMethod:props.entryMethod,
+                  demandAmount: calcultateTotal(props.selectedExams, values.choosenExam)
                 }
-                setSubmitting(false);
-              }).catch(err=>{
-                // props.onNext('next', {status:false})
-                notifyError(err.toString())
-                setSubmitting(false);
-              })
+                fetch('http://localhost:4000/api/demand/textDemand',{
+                  method:'post',
+                  headers: {'Content-Type': 'application/json'},
+                  body:JSON.stringify(returnValues)
+                })
+                .then(data=>data.json())
+                .then(result=>{
+                  if(result.SIN){
+                    let data={SIN:`SYS - ${result.SIN.slice(0,4)} - ${result.SIN.slice(4,8)}`, status:true}
+                    props.onNext('next', data)
+                  }else{
+                    notifyError(result.err.toString())
+                    // props.onNext('next', {status:false})
+                  }
+                  setSubmitting(false);
+                }).catch(err=>{
+                  // props.onNext('next', {status:false})
+                  notifyError(err.toString())
+                  setSubmitting(false);
+                })
+              }else{
+                //complete the demand here
+                console.log('complete demand')
+              }
               //this is where you do a backend 
               
               //after the api call if the response is good, then you write to the state using the onNext supplied by props
@@ -208,13 +210,13 @@ function Validation(props){
                             }}
                           />
                           <i>{exam.nameExamination}</i>
-                          <i>{exam.bValue*105}</i>
+                          <i>{exam.bValue*105} CFA</i>
                         </div>
                       ))}
                   </Scrollbars>
                   <div className="exm-dmd-tbl-total">
                     <i>Total</i>
-                    <i>{calcultateTotal(props.selectedExams, values.choosenExam)}</i>
+                    <i>{calcultateTotal(props.selectedExams, values.choosenExam)} CFA</i>
                   </div>
                 </div>
               <span className="guidan" id="cancel-guidan-css">
@@ -277,10 +279,11 @@ function Validation(props){
                 </div>
               </div>
               <div className="idnt-btns">
-                <button type='button' className="btn-cancel" onClick={()=>window.location.assign('/home')}>Cancel</button>
+                {!props.complete?<button type='button' className="btn-cancel" onClick={()=>window.location.assign('/home')}>Cancel</button>:null}
                 <button type='button' className='btn-cancel' onClick={()=>props.onNext('back')} >
                   <i className='fa fa-arrow-left'>Back</i></button>
-                <button type='submit' className="btn-pay">Pay</button>
+                {!props.complete?<button type='submit' className="btn-pay">Pay</button>:
+                <button type='button' className="btn-pay" onClick={()=>props.onNext('next')}>Pay</button>}
               </div>
               <ToastContainer />
             </Form>

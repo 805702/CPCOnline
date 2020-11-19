@@ -119,13 +119,13 @@ class TextDemand extends Component {
                         <div className="exm-dmd-tbl-row" key={selectedExam.idExamination}>
                             <input type='checkbox' checked={true} onChange={this.onRemoveFromSelectedList} value={selectedExam.idExamination} onClick={this.onRemoveFromSelectedList} />
                             <i>{selectedExam.label}</i>
-                            <i>{selectedExam.bValue*105}</i>
+                            <i>{selectedExam.bValue*105} CFA</i>
                         </div>
                     ))}
                 </Scrollbars>
                 <div className="exm-dmd-tbl-total">
                     <i>Total</i>
-                    <i>{this.calculateExamListTotal()}</i>
+                    <i>{this.calculateExamListTotal()} CFA</i>
                 </div>
                 <ToastContainer />
             </div>

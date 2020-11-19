@@ -1,0 +1,52 @@
+.result-body {
+    display: grid;
+    /* justify-content: center; */
+}
+
+.result-body .a-to-complete-dmd,
+.result-body .a-to-complete-dmd-hdr {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 20px;
+    padding: 0 10px;
+}
+
+.result-body .a-to-complete-dmd i:last-of-type {
+    justify-self: end;
+    margin-right: 10px;
+}
+
+.result-body .a-to-complete-dmd i:first-of-type {
+    justify-self: center;
+}
+
+.result-body .a-to-complete-dmd-hdr i {
+    justify-self: center;
+}
+
+.result-body .a-to-complete-dmd i,
+.result-body .a-to-complete-dmd-hdr i {
+    font-style: normal;
+    cursor: pointer;
+}
+
+.result-body .a-to-complete-dmd-hdr {
+    background-color: black;
+    color: white;
+    font-size: 1.1rem;
+    padding: 3px 0;
+}
+
+.result-body .a-to-complete-dmd {
+    padding: 5px 0;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 3px 0 rgba(0, 0, 0, 0.19);
+    margin: 3px 0;
+    cursor: pointer;
+    min-height: 2.5rem;
+    align-content: center;
+}
+
+.result-body .a-to-complete-dmd:hover {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 3px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 10px 0 rgba(38, 150, 224, 0.19);
+}

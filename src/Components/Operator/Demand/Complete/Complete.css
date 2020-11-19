@@ -1,0 +1,28 @@
+.top-holder {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 5px solid black;
+    margin-bottom: 15px;
+}
+
+.top-holder .result-body {
+    border-right: 5px solid black;
+}
+
+.cplt-dmd-imgs img {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.open-dmd {
+    background-color: rgba(228, 13, 13, 0.541);
+}
+
+.a-to-cplt-active {
+    justify-self: end;
+}
+
+.fa-caret-right {
+    margin-left: 10px;
+}

@@ -45,6 +45,8 @@ class Home extends Component {
               <HomeLink to="/demand" linkName="Request Exam" notif={false} />
               <HomeLink to="/result" linkName="Consult results" notif={false} />
               <HomeLink to='/awaitConfirmation' linkName='Pending Confirmation' notif={false} />
+              <HomeLink to='/awaitCompletion' linkName='Pending Completion' notif={false} />
+              <HomeLink to='/awaitPayment' linkName='Pending Payment' notif={false} />
               {/* <HomeLink to="/home" linkName="Consult history" notif={false} /> */}
             </React.Fragment>
           );

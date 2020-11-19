@@ -4,8 +4,12 @@
     margin-top: 10px;
     border-radius: 10px;
     border: 1px solid black;
-    height: 50vh;
+    height: 63vh;
     margin-bottom: 10px;
+}
+
+.dmd-upld {
+    height: 50vh;
 }
 
 .special-req-holder {
