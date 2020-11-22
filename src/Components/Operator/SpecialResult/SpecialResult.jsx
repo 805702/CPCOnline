@@ -54,7 +54,7 @@ function SpecialResult(props){
                     props.dispatch({ type: "LOAD_USER", payload: result.theUser });
                     props.dispatch({type: "LOAD_IS_AUTHENTICATED",payload: true,});
                     const userId = parseJwt(theToken).idUser;
-                    let wanted = ['operator','admin']
+                    let wanted = ['operator']
                     if (wanted.includes(result.theUser.roleUser) && !isNaN(Number(userId))) {
                       if(values.upload !== null && values.upload!==undefined){
                         let formData = new FormData();

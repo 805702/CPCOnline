@@ -15,7 +15,7 @@ import './Block.css'
 export default function Block(props) {
     return (
         <div className="block-name">
-            <img src={logo} alt='logo' style={{width: 89.7, height: 66.78}} />
+            {props.message==='Validate your request' || props.pageName==='Complete Payment'?null:<img src={logo} alt='logo' style={{width: 89.7, height: 66.78}} />}
             <i className='page-name'>{props.pageName}</i>
             {props.message?<i className='block-message'>{props.message}</i>:null}
             {props.children}

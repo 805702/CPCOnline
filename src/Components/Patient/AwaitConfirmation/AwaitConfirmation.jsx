@@ -35,7 +35,6 @@ class AwaitConfirmation extends Component {
                         body:JSON.stringify({idUser: parseJwt(userToken).idUser})
                     }).then(data=>data.json())
                     .then(result=>{
-                        console.log(result)
                         if(!result.err) {
                             this.props.dispatch({type:'LOAD_DEMAND_HAS_EXAM_JOIN', payload:result.demandHasExamJoin})
                             this.props.dispatch({type:'LOAD_MED_EXAM_RESULT', payload:result.medExamResult})
@@ -88,8 +87,8 @@ class AwaitConfirmation extends Component {
                         <StyleReceipt receipt={false} GIN={this.state.SIN} handleBackBtn={this.handleBackBtn} callingComponent ='confirmation' />
                         :
                         <React.Fragment>
-                            <input type='text' placeholder='Search GIN...' onChange={this.handleSearchChange} className='result-search' />
-                            <StyleDemands searchValue={this.state.searchValue} demandClick={this.demandClick} />
+                            <input type='text' placeholder='Search demand id...' onChange={this.handleSearchChange} className='result-search' />
+                            <StyleDemands callingComponent='confirmation' searchValue={this.state.searchValue} demandClick={this.demandClick} />
                         </React.Fragment>
                     }
                     <ToastContainer />

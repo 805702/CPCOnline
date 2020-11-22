@@ -4,7 +4,7 @@
     margin-top: 10px;
     border-radius: 10px;
     border: 1px solid black;
-    height: 63vh;
+    height: 53vh;
     margin-bottom: 10px;
 }
 
@@ -14,6 +14,8 @@
 
 .special-req-holder {
     display: grid;
+    background-color: #f4f5f7;
+    grid-template-rows: min-content 1fr;
 }
 
 .special-req-holder .no-margin-form .upload-results-sumbit {

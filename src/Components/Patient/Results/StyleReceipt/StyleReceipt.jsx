@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import './StyleReceipt.css'
 
 function requestResult (GIN) {
     alert(`Results requested for ${GIN}`)
@@ -12,7 +13,6 @@ function StyleReceipt(props){
         let total = 0;
         exams.map(anExam=>{
             total+=anExam.bValue
-            console.log(anExam.bVal)
             return null
         })
         return total*105
@@ -23,8 +23,9 @@ function StyleReceipt(props){
     dateDemanded[1]= dateDemanded[1].split('.0')[0]
     dateDemanded =dateDemanded.join(' ')
     return(
-        <React.Fragment>
-            <i className="fa fa-arrow-left receipt-back-btn" onClick={()=>props.handleBackBtn()} />
+        <div>
+            {props.callingComponent!=='demand'?<i className="fa fa-arrow-left receipt-back-btn" onClick={()=>props.handleBackBtn()} />
+            :<i className="fa fa-download download-receipt" onClick={()=>props.handleBackBtn()} >Download receipt</i>}
             <div className="receipt-header">
                 <span className="receipt-header-line">
                     <i className="receipt-header-line-name">CENTRE PASTEUR</i>
@@ -83,10 +84,10 @@ function StyleReceipt(props){
                                   Request results
                                 </i>
                               </span>:
-                              <span className="demand-GIN-data-group">
+                              props.callingComponent!=='demand'?<span className="demand-GIN-data-group">
                               <i className="demand-GIN-data-label">Pending</i>
                               <i className="demand-GIN-data-value">Confirmation</i>
-                            </span>
+                            </span>:null
                             ) : (
                               props.callingComponent==='result'?<span className="demand-GIN-data-group btn-own">
                                 <a
@@ -131,7 +132,7 @@ function StyleReceipt(props){
             :null
             }
 
-        </React.Fragment>
+        </div>
     )
 }
 

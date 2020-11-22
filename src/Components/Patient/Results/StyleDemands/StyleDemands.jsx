@@ -1,4 +1,5 @@
 import React from 'react';
+import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 
 /**
@@ -38,6 +39,7 @@ function StyleDemands(props){
     let demandGIN = groupMedExamDemandByGIN(props.demandHasExamJoin, props.searchValue)
     if(demandGIN.length>0){
         return(
+            <Scrollbars style={{height:'69.76vh'}}>
             <div className="grouped-demands">
                 {demandGIN.map(aDemand=>{
                     let dateDemanded = aDemand.dateDemanded.split('T')
@@ -68,13 +70,15 @@ function StyleDemands(props){
                                 </span>:
                                 <span className="demand-GIN-data-group">
                                     <i className="demand-GIN-data-label">Waiting</i>
-                                    <i className="demand-GIN-data-value">Results</i>
+                                    {props.callingComponent==='confirmation'?<i className="demand-GIN-data-value">Confirmation</i>
+                                    :<i className="demand-GIN-data-value">Results</i>}
                                 </span>}
                             </div>
                         </div>
                     )
                 })}
             </div>
+            </Scrollbars>
         )
     }else{
         return(
@@ -83,7 +87,9 @@ function StyleDemands(props){
                     <div className="demand-GIN-indicator"></div>
                     <div className="demand-GIN-data">
                         <span className="demand-GIN-data-group">
-                            <i className="demand-GIN-data-label">You have no demands with this GIN</i>
+                            {props.demandHasExamJoin.length===0?<i className="demand-GIN-data-label">You have no demands awaiting {props.callingComponent==='confirmation'?'confirmation'
+                            :props.callingComponent==='result'?'results':'completion'}</i>
+                            :<i className="demand-GIN-data-label">You have no demands that match this demand id</i>}
                         </span>
                     </div>
                 </div>

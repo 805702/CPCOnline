@@ -12,6 +12,7 @@ class Complete extends Component {
   state = {
     SIN: "",
     submitting: false,
+    searchValue:''
   };
 
   NotifyOperationFailed(message) {
@@ -20,6 +21,10 @@ class Complete extends Component {
 
   NotifyOperationSucces(message) {
     return toast.success(message);
+  }
+
+  handleSearchChange=e=>{
+    this.setState({searchValue:e.target.value})
   }
 
   componentDidMount() {
@@ -101,41 +106,81 @@ class Complete extends Component {
 
   styleToCompleteDemands = () => {
     const singleSIN = [];
-    this.props.toComplete.forEach((_) => {
+    let sample = this.props.toComplete
+    if(this.state.searchValue !== ''){
+      sample = this.props.toComplete.filter(_=>
+        _.SIN.includes(this.state.searchValue)
+       ) 
+
+    }
+
+    sample.forEach((_) => {
       let test = singleSIN.find((__) => __.SIN === _.SIN);
       if (test === undefined)
         singleSIN.push({ SIN: _.SIN, dateCreated: _.dateCreated });
     });
-    return singleSIN.map((aDemand) => {
-      return (
-        this.state.SIN!==aDemand.SIN?<div
-          className="a-to-complete-dmd"
-          key={aDemand.SIN}
-          onClick={() => this.handleDemandClick(aDemand.SIN)}
-        >
-          <i className="a-to-complete-dmd-data">{aDemand.SIN}</i>
-          <i className="a-to-complete-dmd-data">
-            {new Date(aDemand.dateCreated).toUTCString().split(" G")[0]}
-          </i>
-        </div>: <div className="a-to-complete-dmd-imgs">
-            <div
-            className="a-to-complete-dmd"
-            key={aDemand.SIN}
-            onClick={() => this.handleDemandClick(aDemand.SIN)}
-            >
-                <i className="a-to-complete-dmd-data">{aDemand.SIN}</i>
-                <i className="a-to-complete-dmd-data">
-                {new Date(aDemand.dateCreated).toUTCString().split(" G")[0]}
-            </i>
-            </div>
-            <Scrollbars className='demand-scrollbar' style={{height:230}}>
-              <div className="dmd-images">
-                {this.styleDemandImages()}
+
+    if(sample.length!==0){
+      return singleSIN.map((aDemand) => {
+        return (
+          this.state.SIN!==aDemand.SIN?
+          <React.Fragment>
+            <div className="demand-GIN" key={aDemand.SIN} onClick={()=>this.handleDemandClick(aDemand.SIN)}>
+              <div className="demand-GIN-indicator"></div>
+              <div className="demand-GIN-data">
+                  <span className="demand-GIN-data-group">
+                      <i className="demand-GIN-data-label">Demand id:</i>
+                      <i className="demand-GIN-data-value">{aDemand.SIN}</i>
+                  </span>
+                  <span className="demand-GIN-data-group">
+                      <i className="demand-GIN-data-label">Demand  date:</i>
+                      <i className="demand-GIN-data-value">{new Date(aDemand.dateCreated).toUTCString().split(" G")[0]}</i>
+                  </span>
+                  <span className="demand-GIN-data-group">
+                      <i className="demand-GIN-data-label">Waiting</i>
+                      <i className="demand-GIN-data-value">Completion</i>
+                  </span>
               </div>
-            </Scrollbars>
+            </div>
+          </React.Fragment>
+          : 
+          <React.Fragment>
+            <div className="demand-GIN" key={aDemand.SIN} onClick={()=>this.handleDemandClick(aDemand.SIN)}>
+              <div className="demand-GIN-indicator"></div>
+              <div className="demand-GIN-data">
+                  <span className="demand-GIN-data-group">
+                      <i className="demand-GIN-data-label">Demand id:</i>
+                      <i className="demand-GIN-data-value">{aDemand.SIN}</i>
+                  </span>
+                  <span className="demand-GIN-data-group">
+                      <i className="demand-GIN-data-label">Demand  date:</i>
+                      <i className="demand-GIN-data-value">{new Date(aDemand.dateCreated).toUTCString().split(" G")[0]}</i>
+                  </span>
+                  <Scrollbars className='demand-scrollbar' style={{height:230}}>
+                    <div className="dmd-images">
+                      {this.styleDemandImages()}
+                    </div>
+                  </Scrollbars>
+              </div>
+            </div>
+          </React.Fragment>
+        );
+      });
+    }else{
+      return (
+        <div className="grouped-demands no-demands">
+          <div className="demand-GIN">
+              <div className="demand-GIN-indicator"></div>
+              <div className="demand-GIN-data">
+                  <span className="demand-GIN-data-group">
+                      {this.props.toComplete.length===0?<i className="demand-GIN-data-label">You have no demands awaiting completion</i>
+                      :<i className="demand-GIN-data-label">You have no demands that match this demand id</i>}
+                  </span>
+              </div>
+          </div>
         </div>
-      );
-    });
+      )
+    }
   };
 
   render() {
@@ -144,11 +189,10 @@ class Complete extends Component {
     <ComponentMould>
       <Block pageName='Your Results' message='Get your results or search for them using the SIN or GIN of the request' />
       <div className='result-body'>
-        <div className="a-to-complete-dmd-hdr" >
-          <i className="a-to-complete-dmd-data">Demand SIN</i>
-          <i className="a-to-complete-dmd-data"> Date Demanded </i>
-        </div>
-        {this.styleToCompleteDemands()}
+        <input type='text' placeholder='Search demand id...' onChange={this.handleSearchChange} className='result-search' />
+        <Scrollbars style={{height:'69.76vh'}}>
+          {this.styleToCompleteDemands()}
+        </Scrollbars>
         <ToastContainer />
       </div>
     </ComponentMould>:'Unauthenticated user'

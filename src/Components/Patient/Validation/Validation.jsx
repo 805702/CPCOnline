@@ -12,6 +12,7 @@ import MOMO from '../../../assets/MOMO.svg';
 import EUMO from '../../../assets/EUMO.png';
 import './Validation.css'
 import 'react-toastify/dist/ReactToastify.css';
+import parseJwt from '../../../utils/parseJwt';
 
 function notifyIncompatiblePhoneService(){return toast.error('Phone number does not match paying service. verify and try again')}
 function notifyNoExam(){return toast.error('Must select at least an exam')}
@@ -94,7 +95,7 @@ function Validation(props){
           onSubmit={(values, { setSubmitting }) => {
             if(validatePayingService(values.payingPhone, values.payingService)){
               if(values.choosenExam.length!==0){
-                if(!this.props.complete){
+                if(!props.complete){
                 let returnValues = {
                   choosenExam:values.choosenExam,
                   payingPhone:Number(values.payingPhone),
@@ -104,6 +105,7 @@ function Validation(props){
                   entryMethod:props.entryMethod,
                   demandAmount: calcultateTotal(props.selectedExams, values.choosenExam)
                 }
+
                 fetch('http://localhost:4000/api/demand/textDemand',{
                   method:'post',
                   headers: {'Content-Type': 'application/json'},
@@ -112,11 +114,34 @@ function Validation(props){
                 .then(data=>data.json())
                 .then(result=>{
                   if(result.SIN){
-                    let data={SIN:`SYS - ${result.SIN.slice(0,4)} - ${result.SIN.slice(4,8)}`, status:true}
-                    props.onNext('next', data)
+                    let SIN=result.SIN
+                    const userToken = localStorage.getItem('userToken')
+                    fetch('http://localhost:4000/api/demand/awaitingConfirmation',{
+                      method:'post',
+                      headers: {'Content-Type':'application/json'},
+                      body:JSON.stringify({idUser:parseJwt(userToken).idUser})
+                    }).then(data=>data.json())
+                    .then(result=>{
+                      if(!result.err) {
+                        props.dispatch({type:'LOAD_DEMAND_HAS_EXAM_JOIN', payload:result.demandHasExamJoin})
+                        props.dispatch({type:'LOAD_MED_EXAM_RESULT', payload:result.medExamResult})
+                        let data = { SIN: SIN, status: true };
+                        props.onNext("next", data);
+                      }
+                      else if (result.err.toString() === "TypeError: Failed to fetch") notifyError( "Verify that your internet connection is active" );
+                      else notifyError(result.err.toString())
+                    })
+                    .catch((err) => {
+                        if (err.toString() === "TypeError: Failed to fetch") {
+                          notifyError("Verify that your internet connection is active");
+                        } else if(err.toString()==='Failed to authenticate token') notifyError('User not authenticated')
+                        else notifyError(err.toString());
+                    });
+
+                    // let data={SIN:`SYS - ${result.SIN.slice(0,4)} - ${result.SIN.slice(4,8)}`, status:true}
                   }else{
                     notifyError(result.err.toString())
-                    // props.onNext('next', {status:false})
+                    props.onNext('next', {status:false})
                   }
                   setSubmitting(false);
                 }).catch(err=>{
@@ -161,7 +186,7 @@ function Validation(props){
               </i>
               <div className="patient-info">
                 <i>
-                  name: {props.identification.fname +" " + props.identification.lname}
+                  Name: {props.identification.fname +" " + props.identification.lname}
                 </i>
                 <i>Born on: {props.identification.dob}</i>
                 <i>
@@ -220,29 +245,12 @@ function Validation(props){
                   </div>
                 </div>
               <span className="guidan" id="cancel-guidan-css">
-                <label htmlFor="payingService">payingService</label>
+                <label htmlFor="payingService" className='paying-service'>Paying service</label>
                 {touched.payingService && errors.payingService ? (
                   <i className="error">{errors.payingService}</i>
                 ) : null}
               </span>
               <div className="pyg-svc-radio">
-                <div className="radio-group">
-                  <Field
-                    type="radio"
-                    name="payingService"
-                    value="OM"
-                    id="OM"
-                    checked={values.payingService === "OM"}
-                    onChange={() => setFieldValue("payingService", "OM")}
-                  />
-                  <label htmlFor="OM">
-                    <img
-                      src={OM}
-                      alt="Orange money"
-                      style={{ height: 50, width: 50 }}
-                    />
-                  </label>
-                </div>
                 <div className="radio-group">
                   <Field
                     type="radio"
@@ -256,6 +264,23 @@ function Validation(props){
                     <img
                       src={MOMO}
                       alt="MTN mobile money"
+                      style={{ height: 50, width: 50 }}
+                    />
+                  </label>
+                </div>
+                <div className="radio-group">
+                  <Field
+                    type="radio"
+                    name="payingService"
+                    value="OM"
+                    id="OM"
+                    checked={values.payingService === "OM"}
+                    onChange={() => setFieldValue("payingService", "OM")}
+                  />
+                  <label htmlFor="OM">
+                    <img
+                      src={OM}
+                      alt="Orange money"
                       style={{ height: 50, width: 50 }}
                     />
                   </label>

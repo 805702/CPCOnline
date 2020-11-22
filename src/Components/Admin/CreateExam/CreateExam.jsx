@@ -121,7 +121,7 @@ class CreateExam extends Component {
                     onChange={(e) => setFieldValue("idExamCategory", Number(e.target.value))}
                     style={{ display: "block" }}
                   >
-                    <option value="" label="Select a title" />
+                    <option value="" label="Choose exam category" />
                     {this.props.examCategory.map(_=>{
                         return <option value={_.idExamCategory} label={_.nameExamCategory} key={_.idExamCategory} />
                     })}

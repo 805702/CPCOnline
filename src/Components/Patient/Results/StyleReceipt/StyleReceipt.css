@@ -1,0 +1,67 @@
+/* .component-holder .grouped-demands */
+
+.demand-GIN {
+    display: grid;
+    grid-template-columns: 10px 1fr;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 3px 0 rgba(0, 0, 0, 0.19);
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    margin: 5px 0;
+}
+
+
+/* .component-holder .grouped-demands  */
+
+.demand-GIN:first-of-type {
+    margin-top: 20px;
+}
+
+
+/* .component-holder .grouped-demands  */
+
+.demand-GIN .demand-GIN-indicator {
+    /* background-color: green; */
+    /* border-radius: 10px; */
+    width: 0.3rem;
+    padding: 0.3rem;
+    /* background-color: #0D9D0A; */
+    background-color: #0052cc;
+    border-radius: 10px;
+}
+
+
+/* .component-holder .grouped-demands  */
+
+.demand-GIN .demand-GIN-data {
+    display: grid;
+    margin-left: 10px;
+}
+
+
+/* .component-holder .grouped-demands  */
+
+.demand-GIN .demand-GIN-data .demand-GIN-data-group i {
+    font-style: normal;
+}
+
+
+/* .component-holder .grouped-demands  */
+
+.demand-GIN .demand-GIN-data .demand-GIN-data-group i:first-of-type {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.receipt-footer {
+    margin-top: 50px;
+}
+
+.download-receipt {
+    width: fit-content;
+    padding: 5px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}

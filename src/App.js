@@ -21,11 +21,13 @@ import CreateExam from './Components/Admin/CreateExam/CreateExam';
 import ManageExams from './Components/Admin/ManageExams/ManageExams';
 import AwaitCompletion from './Components/Patient/AwaitCompletion/AwaitCompletion';
 import AwaitPayment from './Components/Patient/AwaitPayment/AwaitPayment';
+import EmptyNav from './Global/EmptyNav/EmptyNav';
 
 class App extends Component {
   render(){
     return (
       <Router>
+        <EmptyNav dispatch={this.props.dispatch} />
         <Switch>
             <Route exact path='/'><Signin dispatch={this.props.dispatch} /></Route>
             <Route exact path='/demand'> <RequestEstimate dispatch={this.props.dispatch} /></Route>
@@ -44,11 +46,6 @@ class App extends Component {
                 }else return <Redirect to='/' />
               }
             } />
-            {/* <PrivateRoute exact path='/home'
-              render={renderProps=>(
-                <Home dispatch={this.props.dispatch} {...renderProps} />
-              )}
-            /> */}
             <Route exact path='/home'><Home dispatch={this.props.dispatch} /></Route>
             <Route exact path='/result'><Results dispatch={this.props.dispatch} /></Route>
             <Route exact path='/confirmDemands'><Confirmation dispatch={this.props.dispatch} /></Route>

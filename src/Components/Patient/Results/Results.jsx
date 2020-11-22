@@ -66,8 +66,8 @@ class Results extends Component {
                         <StyleReceipt receipt={false} GIN={this.state.GIN} handleBackBtn={this.handleBackBtn} callingComponent='result'/>
                         :
                         <React.Fragment>
-                            <input type='text' placeholder='Search GIN...' onChange={this.handleSearchChange} className='result-search' />
-                            <StyleDemands searchValue={this.state.searchValue} demandClick={this.demandClick} />
+                            <input type='text' placeholder='Search demand id...' onChange={this.handleSearchChange} className='result-search' />
+                            <StyleDemands callingComponent = 'result' searchValue={this.state.searchValue} demandClick={this.demandClick} />
                         </React.Fragment>
                     }
                 </div>

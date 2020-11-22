@@ -1,6 +1,7 @@
 import React from 'react';
 import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
+import Block from '../../../../../Global/Block/Block';
 import ComponentMould from '../../../../../Global/ComponentMould/ComponentMould';
 
 import DemandLine from '../DemandLine/DemandLine';
@@ -8,7 +9,15 @@ import './Confirm.css'
 
 
 function Confirm(props) {
-    let demands = props.medicalExamDemand.sort((a,b)=>(new Date(a.dateCreated))>(new Date(b.dateCreated))?1:-1)
+    let sample = props.medicalExamDemand
+    
+    if(props.searchValue!==''){
+        sample = sample.filter(_=>
+            _.SIN.includes(props.searchValue)
+        )
+    }
+    
+    let demands = sample.sort((a,b)=>(new Date(a.dateCreated))>(new Date(b.dateCreated))?1:-1)
     demands = demands.map((aDemand,index)=>{
         let demandDate = aDemand.dateCreated.split('T')
         demandDate[0] = new Date(demandDate[0]).toDateString()
@@ -19,13 +28,17 @@ function Confirm(props) {
     })
     return (
         <ComponentMould>
+            <Block pageName='Confirm Requests' message='' />
             <div className='confirm-demand-container'>
-                <DemandLine td={false} />
-                <Scrollbars style={{height:'50vh'}}>
-                    <div className="confirm-demand-holder">
-                        {demands}
-                    </div> 
-                </Scrollbars>
+                <input type='text' placeholder='Search demand id...' onChange={props.handleSearchChange} className='result-search' />
+                {demands.length!==0?
+                    <Scrollbars style={{height:'77vh'}}>
+                        <div className="confirm-demand-holder">
+                            {demands}
+                        </div> 
+                    </Scrollbars>
+                    :<DemandLine td={false} />
+                }
             </div>
         </ComponentMould>
     )

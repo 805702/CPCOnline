@@ -33,7 +33,7 @@ class Complete extends Component {
             if (!result.err) {
                 this.props.dispatch({ type: "LOAD_USER", payload: result.theUser, });
                 this.props.dispatch({ type: "LOAD_IS_AUTHENTICATED", payload: true, });
-                if(this.props.user.roleUser==='admin')
+                if(this.props.user.roleUser==='operator')
                 fetch('http://localhost:4000/api/demand/getDemandsToComplete',{
                     method:'get',
                     headers:{'Content-Type':'application/json'}
@@ -141,9 +141,9 @@ class Complete extends Component {
 
     render() {
         const token = localStorage.getItem("userToken");
-        return (token !== null && parseJwt(token).idUser !== undefined && this.props.isAuthenticated && this.props.user.roleUser==='admin')?
+        return (token !== null && parseJwt(token).idUser !== undefined && this.props.isAuthenticated && this.props.user.roleUser==='operator')?
         (
-          <React.Fragment>
+          <div>
             <div className="top-holder">
                 <div className="result-body">
                     <div className="a-to-complete-dmd-hdr" >
@@ -167,7 +167,7 @@ class Complete extends Component {
               complete={true}
             />
             <ToastContainer />
-          </React.Fragment>
+          </div>
         ):<span>Invalid User Sign in to get acces to this page.</span>
     }
 }

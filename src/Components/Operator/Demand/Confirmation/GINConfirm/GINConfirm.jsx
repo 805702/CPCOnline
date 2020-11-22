@@ -9,10 +9,12 @@ import ComponentMould from '../../../../../Global/ComponentMould/ComponentMould'
 import './GINConfirm.css'
 import 'react-toastify/dist/ReactToastify.css';
 import parseJwt from '../../../../../utils/parseJwt'
+import Block from '../../../../../Global/Block/Block';
 
 
 
 function NotifyOperationFailed(message){return toast.error(message)}
+function NotifyOperationSuccess(message){return toast.success(message)}
 
 function GINConfirmExams(props){
     return(
@@ -51,6 +53,7 @@ class GINConfirm extends Component {
     render(){
         return (
             <ComponentMould>
+                <Block pageName='Confirm A Request' message='' />
                 <div className='GINConfirm-holder'>
                     <span className="GINConfirm-page-hdr">
                         <i className="fa fa-arrow-left" onClick={this.props.onBack} />
@@ -96,6 +99,7 @@ class GINConfirm extends Component {
                                         if(result.err)NotifyOperationFailed(result.err.toString())
                                         else {
                                             this.props.dispatch({type:'REMOVE_MEDICAL_EXAM_DEMAND', payload:SIN})
+                                            NotifyOperationSuccess("Demand Confirmed Successfully")
                                             this.props.onBack()
                                         }
                                     })

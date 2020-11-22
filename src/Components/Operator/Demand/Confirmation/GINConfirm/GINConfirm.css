@@ -61,6 +61,10 @@
     display: grid;
 }
 
+.no-margin-form {
+    align-self: start;
+}
+
 .GINConfirm-exams-confirm .no-margin-form .upload-GIN-btn {
     justify-self: end;
     height: 2rem;
@@ -88,4 +92,8 @@
     margin-left: 5px;
     padding: 5px;
     align-self: center;
+}
+
+.confirmation {
+    background-color: #f4f5f7;
 }

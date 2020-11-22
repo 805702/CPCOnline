@@ -11,6 +11,7 @@ import TextDemand from './Demand/TextDemand/TextDemand'
 import './RequestEstimate.css'
 import MedPersonnel from './MedPersonnel/MedPersonnel'
 import Confirmation from '../Confirmation/Confirmation'
+import StyleReceipt from '../Results/StyleReceipt/StyleReceipt';
 
 class RequestEstimate extends Component {
     state={
@@ -123,7 +124,8 @@ class RequestEstimate extends Component {
                             }
                             return this.setState({step:'validate', medPersonnel:data})
                         case 'validate':
-                            return this.setState({step:'confirm', SIN:data.SIN, status:data.status})
+                            if(data.status) return this.setState({step:'receipt', SIN:data.SIN, status:data.status})
+                            else return this.setState({step:'confirm', status:data.status})
                         default: return ''
                     }
                 case 'back':
@@ -167,6 +169,11 @@ class RequestEstimate extends Component {
         )
     }
 
+    handleBack=()=>{
+        console.log('handle receipt download btn')
+        let w=window.print()
+    }
+
     render() {
         const notWanted = ["visitor", "partner"];
         const {roleUser}=this.props.user
@@ -180,7 +187,7 @@ class RequestEstimate extends Component {
         };
         return (
             <ComponentMould>
-                {this.state.step!=='confirm'?<Block pageName='Complete Your Request' message={this.blockMessage()} />:null}
+                {this.state.step!=='confirm'?<Block pageName={this.state.step==='receipt'?'Demand Receipt':'Complete Your Request'} message={this.blockMessage()} />:null}
                 {this.state.step==='exams'?this.examSelection():null}
                 {this.state.step==='iden'?<Identification onNext={this.handleNextBtn} identification={this.state.identification} token={localStorage.getItem('userToken')} />:null}
                 {this.state.step==='validate'?
@@ -204,6 +211,7 @@ class RequestEstimate extends Component {
                     :null
                 }
                 { this.state.step==='confirm'? <Confirmation status={this.state.status} SIN={this.state.SIN} entryMethod={this.state.entryMethod} />:null }
+                { this.state.step==='receipt'? <StyleReceipt receipt={true} GIN={this.state.SIN} callingComponent='demand' handleBackBtn={this.handleBack} />:null }
                 <ToastContainer />
             </ComponentMould>
         )

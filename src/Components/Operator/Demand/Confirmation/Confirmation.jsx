@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 class Confirmation extends Component {
   state = {
     SIN: "",
+    searchValue:''
   };
 
   notifyErrorMessage = (message) => toast.error(message);
@@ -28,7 +29,7 @@ class Confirmation extends Component {
             this.props.dispatch({type: "LOAD_IS_AUTHENTICATED",payload: true,});
 
             const {roleUser} = this.props.user
-            if(this.props.isAuthenticated && roleUser==='admin'){
+            if(this.props.isAuthenticated && roleUser==='operator'){
                 fetch("http://localhost:4000/api/demand/confirmDemands", {
                 method: "get",
                 headers: { "Content-Type": "application/json" },
@@ -74,6 +75,10 @@ class Confirmation extends Component {
     this.setState({ SIN: "" });
   };
 
+  handleSearchChange=e=>{
+    this.setState({searchValue:e.target.value})
+  }
+
   handleDemandClick = (SIN) => {
     // fetch('http://localhost:4000/api/demand/treatDemand',{
     //     body:JSON.stringify({SIN}),
@@ -88,7 +93,7 @@ class Confirmation extends Component {
 
   render() {
     return (
-      <div>
+      <div className='confirmation'>
         <ToastContainer />
         {this.state.SIN !== "" ? (
           <GINConfirm
@@ -100,6 +105,8 @@ class Confirmation extends Component {
           <Confirm
             dispatch={this.props.dispatch}
             onNext={this.handleDemandClick}
+            handleSearchChange={this.handleSearchChange}
+            searchValue={this.state.searchValue}
           />
         )}
       </div>

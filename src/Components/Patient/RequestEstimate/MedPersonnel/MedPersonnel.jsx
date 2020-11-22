@@ -50,7 +50,7 @@ function MedPersonnel(props) {
             onChange={(e) => setFieldValue("title", e.target.value)}
             style={{ display: "block" }}
           >
-            <option value="" label="Select a title" />
+            <option value="" label="Choose your doctor's title" />
             <option value="Dr" label="Dr" />
             <option value="Pr" label="Pr" />
           </select>

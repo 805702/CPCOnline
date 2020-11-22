@@ -53,6 +53,19 @@ class Home extends Component {
       }
   }
 
+  partnerLinks=()=>{
+      if(this.props.isAuthenticated && this.props.user.roleUser==='partner'){
+          return (
+            <React.Fragment>
+              <HomeLink to="/demand" linkName="Request Exam" notif={false} />
+              <HomeLink to="/result" linkName="Consult results" notif={false} />
+              <HomeLink to='/awaitConfirmation' linkName='Pending Confirmation' notif={false} />
+              {/* <HomeLink to="/home" linkName="Consult history" notif={false} /> */}
+            </React.Fragment>
+          );
+      }
+  }
+
   visitorLinks=()=>{
       if(this.props.isAuthenticated && this.props.user.roleUser==='visitor')
       return <HomeLink to="/demand" linkName="Request Exam" notif={false} />;
@@ -92,6 +105,7 @@ class Home extends Component {
         {this.props.isAuthenticated ? (
             <React.Fragment>
                 {this.patientLinks()}
+                {this.partnerLinks()}
                 {this.visitorLinks()}
                 {this.adminLinks()}
                 {this.operatorLinks()}

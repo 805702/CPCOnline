@@ -1,5 +1,8 @@
 .component-holder .result-body {
     display: grid;
+    height: 100%;
+    overflow: hidden;
+    grid-template-rows: min-content;
     /* justify-self: center; */
 }
 
@@ -7,7 +10,7 @@
     justify-self: center;
     margin-top: 20px;
     background-color: #f2f2f2;
-    border: none;
+    border: 0.5px solid #f2f2f2;
     padding: 5px;
     border-radius: 10px;
     text-align: center;
@@ -24,7 +27,10 @@
     margin: 20px 0 0 0;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN {
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 1rem 1fr;
@@ -34,37 +40,56 @@
     border-bottom-left-radius: 10px;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN:hover {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 10px 0 rgba(38, 150, 224, 0.19);
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN:hover {
+    /* box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 10px 0 rgba(38, 150, 224, 0.19); */
     border: 1px solid rgba(38, 150, 224, 0.19);
     outline: none;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-indicator {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN .demand-GIN-indicator {
     width: 0.3rem;
     padding: 0.3rem;
-    background-color: #0D9D0A;
+    /* background-color: #0D9D0A; */
+    background-color: #0052cc;
     border-radius: 10px;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN .demand-GIN-data {
     display: grid;
     grid-auto-flow: row;
     padding: 10px;
     margin-right: 1rem;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .demand-GIN-data-group .demand-GIN-data-label {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN .demand-GIN-data .demand-GIN-data-group .demand-GIN-data-label {
     font-style: normal;
     margin-right: 5px;
     font-weight: 500;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .demand-GIN-data-group .demand-GIN-data-value {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN .demand-GIN-data .demand-GIN-data-group .demand-GIN-data-value {
     font-style: normal;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .btn-own {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN .demand-GIN-data .btn-own {
     margin-top: 5px;
     background-color: #ee3333;
     color: white;
@@ -74,13 +99,19 @@
     cursor: pointer;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .dwnld-btn {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN .demand-GIN-data .dwnld-btn {
     color: white;
     cursor: pointer;
     text-decoration: none;
 }
 
-.component-holder .result-body .grouped-demands .demand-GIN .demand-GIN-data .btn-own:hover {
+
+/* .component-holder .result-body .grouped-demands  */
+
+.demand-GIN .demand-GIN-data .btn-own:hover {
     transition: 0.3s;
     background-color: #c90a0a;
 }

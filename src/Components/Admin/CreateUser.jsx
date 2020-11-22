@@ -145,7 +145,7 @@ class CreateUser extends Component {
                     onChange={(e) => setFieldValue("role", e.target.value)}
                     style={{ display: "block" }}
                   >
-                    <option value="" label="Select a title" />
+                    <option value="" label="Select a user role" />
                     <option value="admin" label="Admin" />
                     <option value="commfi" label="Finance Member" />
                     <option value="operator" label="Operator" />

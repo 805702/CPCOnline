@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import './DemandResults.css'
 import { toast, ToastContainer } from 'react-toastify'
 import DemandResultLine from '../DemandResultLine/DemandResultLine'
+import Scrollbars from 'react-custom-scrollbars'
+import Block from '../../../../Global/Block/Block'
 
 function NotifyOperationFailed(message) {
   return toast.error(message);
@@ -16,7 +18,8 @@ function NotifyOperationSuccess(message) {
 class DemandResults extends Component {
     state={
         GIN:'',
-        action:''
+        action:'',
+        searchValue:''
     }
 
 
@@ -77,9 +80,28 @@ class DemandResults extends Component {
         else this.setState({GIN})
     }
 
+    handleSearchChange=e=>{
+      this.setState({searchValue:e.target.value})
+    }
+
     styleDemands=()=>{
       if(this.props.demandResults.length!==0){
-        return this.props.demandResults.map((aDemand, index)=>{
+        let sample = this.props.demandResults
+        let uniqueGIN = []
+
+        if(this.state.searchValue !== ''){
+          sample = this.props.demandResults.filter(_=>
+            _.GIN.includes(this.state.searchValue)
+          ) 
+        }
+
+        sample.forEach(_=>{
+          let test = uniqueGIN.find(__=>__.GIN===_.GIN)
+
+          if(test===undefined)uniqueGIN.push(_)
+        })
+
+        return uniqueGIN.map((aDemand, index)=>{
             let dueDateTime = aDemand.dueDate.split('T')
             dueDateTime[1] = dueDateTime[1].split('.0')[0]
             dueDateTime[0] = new Date(dueDateTime[0]).toUTCString().split(' G')[0]
@@ -99,15 +121,20 @@ class DemandResults extends Component {
               key={aDemand.GIN}
             />
         })
-      }else return 'No results to display'
+      }else return <DemandResultLine td={false} />
     }
 
     render() {
         return (
           <div className="demand-results-holder">
-            <DemandResultLine td={false} />
-            {this.styleDemands()}
-            <ToastContainer />
+            <Block pageName='Upload Results' message='' />
+            <div className='demand-result'>
+              <input type='text' placeholder='Search demand id...' onChange={this.handleSearchChange} className='result-search' />
+              <Scrollbars style={{height:'77.3vh'}} >
+                {this.styleDemands()}
+              </Scrollbars>
+              <ToastContainer />
+            </div>
           </div>
         );
     }

@@ -1,21 +1,30 @@
 .component-container {
     display: grid;
     align-items: center;
-    height: 100vh;
+    max-height: 100%;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #f4f5f7;
+    grid-template-columns: 1fr;
 }
 
 .component-holder {
     display: grid;
     border-radius: 10px;
     justify-self: center;
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 7px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 7px 0 rgba(0, 0, 0, 0.19); */
     width: 75vw;
     padding: 10px;
     min-width: 290px;
+    max-width: 1000px;
+    height: 100%;
+    grid-template-rows: min-content 1fr;
 }
 
 .component-form {
     display: grid;
+    align-content: center;
     margin-top: 30px;
     justify-self: center;
     width: 65vw;
@@ -75,7 +84,7 @@
 
 @media only screen and (min-width: 800px) {
     .component-holder {
-        width: 40vw;
+        /* width: 40vw; */
     }
     .component-form {
         width: 30vw;

@@ -1,4 +1,63 @@
 .empty-nav {
     padding: 3px;
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 7px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 7px 0 rgba(0, 0, 0, 0.19); */
+    background-color: #eee;
+    grid-template-rows: 150px;
+    position: relative;
+    color: #dee3ec87;
+    display: grid;
+    grid-auto-flow: row;
+    align-content: flex-start;
+}
+
+.empty-nav a {
+    text-decoration: none;
+    color: black;
+}
+
+.empty-nav a:first-of-type {
+    justify-self: center;
+}
+
+.empty-nav .theLinks {
+    display: grid;
+    grid-auto-flow: row;
+    align-content: center;
+    grid-gap: 5px;
+    width: 250px;
+}
+
+.empty-nav .theLinks a {
+    /* border: 1px solid black; */
+    border-radius: 10px 5px;
+    text-align: center;
+    padding: 10px 5px;
+    font-weight: bold;
+}
+
+.empty-nav .theLinks a:hover {
+    transition: 0.5s;
+    background-color: #bbc3d187;
+}
+
+.empty-nav .theLinks a:last-of-type {
+    /* background-color: rgb(252, 0, 0); */
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    border: none;
+    color: red;
+}
+
+.empty-nav .theLinks a:last-of-type:hover {
+    transition: 0.5s;
+    background-color: rgb(184, 0, 0);
+    color: white;
+}
+
+.empty-nav .theLinks .selectedLink {
+    background-color: #0052cc;
+    color: white;
 }

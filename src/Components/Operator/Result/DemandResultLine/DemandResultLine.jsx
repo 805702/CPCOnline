@@ -164,7 +164,7 @@ class DemandResultLine extends Component {
                 </span>
                 <Field name="postpone" type="date" value={values.postpone} />
               </React.Fragment>:null}
-              {values.upload!==null && values.upload!== undefined?
+              {values.upload!==null && values.upload!== undefined && this.state.choosenAction==='upload'?
                 <iframe
                   src={this.showURL(values.upload)}
                   className='pdf-iframe dmd-upld'
@@ -203,43 +203,50 @@ class DemandResultLine extends Component {
 
   render() {
     return this.props.td ? (
-      <div className="demand-result-line-td">
-        <span
-          className="demand-result-data-line"
-          onClick={() => this.props.onClick(this.props.GIN)}
-        >
-          <i className="demand-result-line-data">{this.props.No}</i>
-          <i className="demand-result-line-data">{this.props.GIN}</i>
-          <i className="demand-result-line-data">{this.props.date}</i>
-        </span>
-        {this.props.open && !this.state.actions.includes(this.props.action) ? (
-          this.props.action !== "upload" && this.props.action !== "postpone" ? (
-            <span className="demand-result-btns">
-              <input
-                type="file"
-                id="upld-result-btn"
-                accept="application/pdf"
-                hidden
-                onChange={(e) => this.handleFileUpload(e, this.props)}
-              />
-              <button className="upld-btn-bg red-bg" onClick={()=>this.setState({choosenAction:'upload'})}>
-                Upload
-              </button>
-              <button onClick={()=>this.setState({choosenAction:'postpone'})}>Postpone</button>
-              {this.presentUpload()}
+      <div className="demand-GIN" key={this.props.GIN} >
+        <div className="demand-GIN-indicator"></div>
+        <div className="demand-GIN-data" >
+          <span className="clickable-area" onClick={()=>this.props.onClick(this.props.GIN)}>
+            <span className="demand-GIN-data-group">
+                <i className="demand-GIN-data-label">Demand id:</i>
+                <i className="demand-GIN-data-value">{this.props.GIN}</i>
             </span>
-          ) : this.props.action === "upload" ? (
-            "hello"
-          ) : (
-            "world"
-          )
-        ) : null}
+            <span className="demand-GIN-data-group">
+                <i className="demand-GIN-data-label">Due date:</i>
+                <i className="demand-GIN-data-value">{this.props.date}</i>
+            </span>
+          </span>
+            {this.props.open && !this.state.actions.includes(this.props.action) ? (
+              this.props.action !== "upload" && this.props.action !== "postpone" ? (
+                <span className="demand-result-btns">
+                  <input
+                    type="file"
+                    id="upld-result-btn"
+                    accept="application/pdf"
+                    hidden
+                    onChange={(e) => this.handleFileUpload(e, this.props)}
+                  />
+                  <button className="upld-btn-bg red-bg" onClick={()=>this.setState({choosenAction:'upload'})}>
+                    Upload
+                  </button>
+                  <button onClick={()=>this.setState({choosenAction:'postpone'})}>Postpone</button>
+                  {this.presentUpload()}
+                </span>
+              ) : null
+            ) : null}
+        </div>
       </div>
     ) : (
-      <div className="demand-result-line-th">
-        <i className="demand-result-line-data">No</i>
-        <i className="demand-result-line-data">GLIMS Number</i>
-        <i className="demand-result-line-data">Time due</i>
+      <div className="demand-GIN" key={this.props.GIN} >
+        <div className="demand-GIN-indicator"></div>
+        <div className="demand-GIN-data" >
+          <span className="clickable-area" onClick={()=>this.props.onClick(this.props.GIN)}>
+            <span className="demand-GIN-data-group">
+                <i className="demand-GIN-data-label">No demands </i>
+                <i className="demand-GIN-data-value">awaiting results</i>
+            </span>
+          </span>
+        </div>
       </div>
     );
   }

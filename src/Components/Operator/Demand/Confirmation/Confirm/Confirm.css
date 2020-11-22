@@ -1,6 +1,6 @@
-/* .confirm-demand-container {
-    padding: 0, ;
-} */
+.confirm-demand-container {
+    display: grid;
+}
 
 .confirm-demand-container .confirm-demand-holder .demand-line:nth-child(even) {
     background-color: #e5e5e5;

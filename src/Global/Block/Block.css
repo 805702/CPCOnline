@@ -8,12 +8,12 @@
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    font-family: "Lucida Bright";
+    font-family: "Roboto", "Lucida Bright";
     margin-top: 5px;
 }
 
 .block-message {
-    font-weight: lighter;
+    font-weight: 500;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
 }
